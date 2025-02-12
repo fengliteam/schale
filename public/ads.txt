@@ -1,0 +1,10 @@
+# Example ads.txt file
+
+# Google Adsense
+google.com, pub-9418786739030080, DIRECT, f08c47fec0942fa0
+
+# ByteDance
+lf1-cdn-tos.bytegoofy.com, cb7d26c59867d807f708ee465815dee20cfc71da30ab495f2ae05ad81368b46dc112ff4abe50733e0ff1e1071a0fdc024b166ea2a296840a50a5288f35e2ca42, RESELLER
+
+# Compliance statement
+# This site does not allow any advertisements that violate Chinese laws and regulations.

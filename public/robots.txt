@@ -1,0 +1,6 @@
+# robots.txt generated at https://www.sojson.com/robots/
+Disallow:https://schale.us.kg/website.xml
+Disallow:http://schale.us.kg/website.xml
+Disallow:/node_modules
+User-agent: *
+Disallow:

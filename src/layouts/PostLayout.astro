@@ -1,0 +1,23 @@
+---
+import CusdisComment from '../components/CusdisComment.astro';
+const { frontmatter, Content } = Astro.props;
+const pageTitle = frontmatter.title || "S.C.H.A.L.E.";
+const pageId = frontmatter.id || "unique-article-id"; // 确保在Markdown文件中设置了id
+---
+
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>{pageTitle}</title>
+</head>
+<body>
+    <article>
+        <h1>{pageTitle}</h1>
+        <Content />
+    </article>
+
+    <!-- 添加评论区 -->
+    <CusdisComment id={pageId} />
+</body>
+</html>
