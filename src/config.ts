@@ -10,7 +10,7 @@ export default {
   // 网站作者
   Author: '星影',
   // 作者头像
-  Avatar: 'https://i0.hdslb.com/bfs/face/122d085cbfc0af63cbb2d8aad0db463d160f6db6.jpg',
+  Avatar: '/assets/images/122d085cbfc0af63cbb2d8aad0db463d160f6db6.webp',
   // 网站座右铭
   Motto: 'TIME OUT',
   // Cover 网站缩略图
