@@ -9,7 +9,8 @@
     "astro": "astro",
     "newpost": "node ./script/newpost.js",
     "offdev": "astro preferences disable devToolbar",
-    "ondev": "astro preferences enable devToolbar"
+    "ondev": "astro preferences enable devToolbar",
+    "clean": "rmdir /s /q dist"
   },
   "dependencies": {
     "@astrojs/mdx": "4.3.0",
