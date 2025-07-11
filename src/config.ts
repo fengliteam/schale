@@ -54,7 +54,7 @@ export default {
     // 建议使用 https://tabler.io/icons 直接下载 SVG
     //{ text: '朋友', link: '/links', icon: 'Nav_friends' },
     //{ text: '圈子', link: '/friends', icon: 'Nav_rss' },
-    { text: '动态', link: '/talking', icon: 'Nav_talking' },
+    //{ text: '动态', link: '/talking', icon: 'Nav_talking' },
     //{ text: '昔日', link: '/archives', icon: 'Nav_archives' },
     //{ text: '留言', link: '/message', icon: 'Nav_message' },
     { text: '关于', link: '/about', icon: 'Nav_about' },
@@ -120,7 +120,7 @@ export default {
     // 支付宝收款码
     AliPay: '/assets/images/alipay.webp',
     // 微信收款码
-    WeChat: ''
+    WeChat: '/assets/images/wepay.webp'
   },
   // 访问网页 自动推送到搜索引擎
   SeoPush: {
