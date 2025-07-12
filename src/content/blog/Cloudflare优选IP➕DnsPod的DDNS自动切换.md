@@ -10,7 +10,7 @@ tags:
 
 id: cloudflare-ip-dnspod-ddns
 cover: https://i0.wp.com/uxiaohan.github.io/v2/2024/08/1724744026.webp
-recommend: true
+recommend: false
 ---
 
 :::note
