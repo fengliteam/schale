@@ -5,19 +5,14 @@ categories:
   - Microsoft
   - Windows
 id: sca-GitHub
-date: 2025-07-11
-updated: 2025-07-11
-tags:
-  - Windows
-  - C#
-  - 工具
-  - 机房
-  - 极域
+date: 2025-07-11 18:18:18
+tags: ["Windows", "C#", "工具", "机房", "极域"]
 cover: https://cdnfile.sspai.com/2025/09/06/fa55b93db39c281535daa917a5bcf672.png
 recommend: true
 top: true
 hide: false
 ---
+
 学生党自用的小工具，**开源免费**，GitHub 已上线，求个 ⭐Star  QwQ
 
 ## 🚀 项目速览
