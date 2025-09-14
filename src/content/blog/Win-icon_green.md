@@ -7,7 +7,8 @@ tags:
 id: win11-green-checkmark
 date: 2025-07-11 17:55:10
 updated: 2025-07-11 17:55:10
-cover: "封面图URL (为空默认随机内置封面 /public/assets/images/banner)"
+[这是一个隐藏的注释]: # 封面图URL
+cover: "/public/assets/images/banner)"
 recommend: true # 是否推荐文章
 top: false # 是否置顶文章
 hide: false # 是否隐藏文章
