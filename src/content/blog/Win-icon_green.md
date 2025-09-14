@@ -8,7 +8,7 @@ id: win11-green-checkmark
 date: 2025-07-11 17:55:10
 updated: 2025-07-11 17:55:10
 [这是一个隐藏的注释]: # 封面图URL
-cover: https://support.microsoft.com/images/zh-cn/4ea17dc4-9849-469f-ab3e-f8cabbabedbe?format=avif
+cover: 
 recommend: true # 是否推荐文章
 top: false # 是否置顶文章
 hide: false # 是否隐藏文章
