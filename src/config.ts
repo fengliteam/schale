@@ -65,10 +65,10 @@ export default {
     // 仅支持 SVG 且 SVG 需放在 public/assets/images/svg/ 目录下，填入文件名即可 <不需要文件后缀名>（封装了 SVG 组件 为了极致压缩 SVG）
     // 建议使用 https://tabler.io/icons 直接下载 SVG
     { text: 'Github', link: 'https://github.com/fengliteam', icon: 'WebSite_github' },
-    //{ text: '韩小韩API', link: 'https://api.vvhan.com', icon: 'WebSite_api' },
-    //{ text: '每日热榜', link: 'https://hot.vvhan.com', icon: 'WebSite_hot' },
-    //{ text: '骤雨重山图床', link: 'https://wp-cdn.4ce.cn', icon: 'WebSite_img' },
-    //{ text: 'HanAnalytics', link: 'https://analytics.vvhan.com', icon: 'WebSite_analytics' },
+    // { text: '韩小韩API', link: 'https://api.vvhan.com', icon: 'WebSite_api' },
+    // { text: '每日热榜', link: 'https://hot.vvhan.com', icon: 'WebSite_hot' },
+    // { text: '骤雨重山图床', link: 'https://wp-cdn.4ce.cn', icon: 'WebSite_img' },
+    // { text: 'HanAnalytics', link: 'https://analytics.vvhan.com', icon: 'WebSite_analytics' },
   ],
   // 侧边栏展示
   AsideShow: {
@@ -106,7 +106,7 @@ export default {
     }
   },
   // Han Analytics 统计（https://github.com/uxiaohan/HanAnalytics）
-  HanAnalytics: { enable: false, server: 'https://analytics.vvhan.com', siteId: 'Hello-HanHexoBlog' },
+  //HanAnalytics: { enable: false, server: 'https://analytics.vvhan.com', siteId: 'Hello-HanHexoBlog' },
   // Google 广告
   GoogleAds: {
     ad_Client: '', //ca-pub-xxxxxx
@@ -124,8 +124,8 @@ export default {
   },
   // 访问网页 自动推送到搜索引擎
   SeoPush: {
-    enable: false,
-    serverApi: '',
+    enable: true,
+    serverApi: 'https://api.indexnow.org/IndexNow',
     paramsName: 'url'
   },
   // 页面阻尼滚动速度
