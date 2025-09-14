@@ -6,7 +6,6 @@ tags:
   - Windows
 id: win11-green-checkmark
 date: 2025-07-11
-updated: 2025-07-11
 cover: https://ts4.tc.mm.bing.net/th/id/OIP-C.AJcp3EAtc5o7xxMiz5vpNgHaEN?rs=1&pid=ImgDetMain&o=7&rm=3
 recommend: true
 top: false
