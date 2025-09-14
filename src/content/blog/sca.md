@@ -8,7 +8,7 @@ tags:
   - 工具
   - 机房
   - 极域
-cover: https://cdnfile.sspai.com/2025/09/06/7c7bb0f78013106b6e80d2d3e28804c2.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1/format/webp
+cover: 
 recommend: true
 top: true
 hide: false
