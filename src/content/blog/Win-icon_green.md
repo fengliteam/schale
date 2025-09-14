@@ -5,12 +5,12 @@ tags:
   - Microsoft
   - Windows
 id: win11-green-checkmark
-date: 2025-07-11 17:55:10
-updated: 2025-07-11 17:55:10
+date: 2025-07-11T17:55:10Z
+updated: 2025-07-11T17:55:10Z
 cover: https://ts4.tc.mm.bing.net/th/id/OIP-C.AJcp3EAtc5o7xxMiz5vpNgHaEN?rs=1&pid=ImgDetMain&o=7&rm=3
-recommend: true # 是否推荐文章
-top: false # 是否置顶文章
-hide: false # 是否隐藏文章
+recommend: true
+top: false
+hide: false
 ---
 
 最近我的Windows 11 （23H2）遇到了桌面上的图标突然出现绿色小对勾，但之前从未遇到过。
