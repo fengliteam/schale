@@ -8,7 +8,7 @@ tags:
   - 工具
   - 机房
   - 极域
-cover: 
+cover:"https://download.logo.wine/logo/OneDrive/OneDrive-Logo.wine.png"
 recommend: true
 top: true
 hide: false
