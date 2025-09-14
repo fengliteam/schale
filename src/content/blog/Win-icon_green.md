@@ -8,14 +8,13 @@ id: win11-green-checkmark
 date: 2025-07-11 17:55:10
 updated: 2025-07-11 17:55:10
 [这是一个隐藏的注释]: # 封面图URL
-cover: "check.webp"
+cover: "https://support.microsoft.com/images/zh-cn/4ea17dc4-9849-469f-ab3e-f8cabbabedbe?format=avif"
 recommend: true # 是否推荐文章
 top: false # 是否置顶文章
 hide: false # 是否隐藏文章
 ---
 
 最近我的Windows 11 （23H2）遇到了桌面上的图标突然出现绿色小对勾，但之前从未遇到过。
-![问题](check.webp)
 ## 网上解决方法
 
 ### 方法一：关闭OneDrive图标状态覆盖
@@ -50,7 +49,6 @@ start explorer.exe
 ### 实测解决方式
 - 方式一
    桌面点击“刷新”
-![刷新](F5.webp)
 - 方式二
    桌面界面按下 ```F5``` 键
    [PS：部分键盘请按住FN+5应该能达到]
