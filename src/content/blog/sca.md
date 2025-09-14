@@ -1,6 +1,6 @@
 ---
 title: "SCA：一键“解锁”机房电脑的小玩具，完全开源！"
-tags:GitHub
+tags: GitHub
 id: sca-GitHub
 date: 2025-07-11 18:18:18
 tags: ["Windows", "C#", "工具", "机房", "极域"]
