@@ -8,7 +8,7 @@ tags:
   - 工具
   - 机房
   - 极域
-cover: assets/images/th.jpg
+cover: assets/images/7c7bb0f78013106b6e80d2d3e28804c2.webp
 recommend: true
 top: true
 hide: false
@@ -57,7 +57,7 @@ hide: false
 ---
 
 ## 🖥 界面截图
-![ERROR](https://cdnfile.sspai.com/2025/09/06/c79cedc5375ead9018da5bfd089f5fe0.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1/format/webp)  
+![ERROR](assets/images/7c7bb0f78013106b6e80d2d3e28804c2.webp)  
 
 ---
 
@@ -87,4 +87,4 @@ A：**MIT**，可商用、可二次发布，**保留原作者署名**即可。
 
 ## 📜 免责声明
 本工具完全免费且开源。作者不对因使用或误用本工具而导致的任何直接或间接损害承担责任。使用即表示您同意自行承担所有风险。
-![ERROR](https://cdnfile.sspai.com/2025/09/06/7c7bb0f78013106b6e80d2d3e28804c2.png?imageView2/2/w/1120/q/90/interlace/1/ignore-error/1/format/webp)  
+![ERROR](assets/images/c79cedc5375ead9018da5bfd089f5fe0.webp)  
