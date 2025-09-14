@@ -8,7 +8,3 @@ type: "links"
 
 👭 排名不分先后，每次刷新 友链 会随机排列噢~
 :::
-name: MaxLHy0424's Blog
-link: https://maxlhy0424.github.io/
-avatar:https://wsrv.nl/?url=maxlhy0424.github.io/__web__/avatar.png&filt=greyscale
-desc: 代码即日记，commit 即足迹。
