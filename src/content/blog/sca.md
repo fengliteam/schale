@@ -5,8 +5,8 @@ categories:
   - Microsoft
   - Windows
 id: win11-green-checkmark
-date: 2025-07-11T17:55:10Z
-updated: 2025-07-11T17:55:10Z
+date: 2025-07-11
+updated: 2025-07-11
 tags:
   - Windows
   - C#
