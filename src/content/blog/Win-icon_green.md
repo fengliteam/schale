@@ -7,7 +7,7 @@ tags:
 id: win11-green-checkmark
 date: 2025-07-11 17:55:10
 updated: 2025-07-11 17:55:10
-cover: assets/images/7c7bb0f78013106b6e80d2d3e28804c2.webp
+cover: assets/images/th.jpg
 recommend: true # 是否推荐文章
 top: false # 是否置顶文章
 hide: false # 是否隐藏文章
