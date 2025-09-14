@@ -49,7 +49,7 @@ hide: false
 | GitHub Release | [GitHub Releases](https://github.com/fengliteam/SCA/releases/tag/LAST) | 全球直链 |
 | 蓝奏云（国内加速） | https://wwg.lanzouo.com/b00roa6pla | 密码：**sca** |
 
-单文件绿色版，双击即用，**无需安装管理员权限**即可执行大部分功能。
+单文件绿色版，双击即用，但是由于任务的特殊性，此程序**需要且必须要申请并使用管理员权限**执行功能。
 
 ---
 
