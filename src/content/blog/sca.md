@@ -1,19 +1,19 @@
 ---
-title: SCA：一键“解锁”机房电脑的小玩具，完全开源！
+title: "SCA：一键“解锁”机房电脑的小玩具，完全开源！"
 categories:
   - 开源项目
   - Microsoft
   - Windows
 id: win11-green-checkmark
-date: 2025-07-11 17:55:10
-updated: 2025-07-11 17:55:10
+date: 2025-07-11T17:55:10Z
+updated: 2025-07-11T17:55:10Z
 tags:
   - Windows
   - C#
   - 工具
   - 机房
   - 极域
-cover: https://cdnfile.sspai.com/2025/09/06/fa55b93db39c281535daa917a5bcf672.png?imageMogr2/auto-orient/thumbnail/!1420x708r/gravity/center/crop/1420x708/format/webp/ignore-error/1
+cover: https://cdnfile.sspai.com/2025/09/06/fa55b93db39c281535daa917a5bcf672.png
 recommend: true
 top: true
 hide: false
