@@ -8,7 +8,7 @@ tags:
   - 工具
   - 机房
   - 极域
-cover:assets/images/th.jpg
+cover: assets/images/th.jpg
 recommend: true
 top: true
 hide: false
