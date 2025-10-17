@@ -101,7 +101,7 @@ export default {
     },
     // Waline 评论
     Waline: {
-      enable: false,
+      enable: true,
       serverURL: 'pinglun.xingying.us.kg '
     }
   },
