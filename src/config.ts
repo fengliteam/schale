@@ -2,7 +2,7 @@ export default {
   // 网站标题
   Title: '星影の博客',
   // 网站地址
-  Site: 'https://schale.dpdns.org',
+  Site: 'https://xingying.us.kg',
   // 网站副标题
   Subtitle: '一切奇迹の起发点',
   // 网站描述
@@ -14,7 +14,7 @@ export default {
   // 网站座右铭
   Motto: 'TIME OUT',
   // Cover 网站缩略图
-  Cover: 'https://img.picui.cn/free/2025/07/08/686d02236b8ed.webp',
+  Cover: 'https://s21.ax1x.com/2025/10/17/pVLigr4.jpg',
   // 网站侧边栏公告 (不填写即不开启)
   Tips: '<p>欢迎光临我的博客 🎉</p><p>这里会分享我的日常和学习中的收集、整理及总结，希望能对你有所帮助:) 💖</p>',
   // 首页打字机文案列表
