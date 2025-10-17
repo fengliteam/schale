@@ -102,7 +102,7 @@ export default {
     // Waline 评论
     Waline: {
       enable: true,
-      serverURL: 'pinglun.xingying.us.kg '
+      serverURL: 'https://pinglun.xingying.us.kg'
     }
   },
   // Han Analytics 统计（https://github.com/uxiaohan/HanAnalytics）
