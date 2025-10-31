@@ -9,7 +9,7 @@ id: sca-update-log
 date: 2025-10-30
 updated: 2025-10-30
 cover: ""
-recommend: false
+recommend: true
 top: false
 hide: false
 ---
