@@ -8,7 +8,7 @@ id: 20251018-uskg-move
 date: 2025-10-18
 updated: 2025-11-01
 cover: ""
-recommend: true
+recommend: false
 top: false
 hide: false
 ---
