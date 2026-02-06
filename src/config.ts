@@ -125,8 +125,8 @@ export default {
   // 访问网页 自动推送到搜索引擎
   SeoPush: {
     enable: true,
-    serverApi: 'https://api.indexnow.org/IndexNow',
-    paramsName: 'url'
+    serverApi: '',
+    paramsName: ''
   },
   // 页面阻尼滚动速度
   ScrollSpeed: 666
