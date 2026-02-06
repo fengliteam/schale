@@ -5,9 +5,9 @@ export default {
   data: [
     {
       "name": "MaxLHy0424's Blog",
-      "link": "https://maxlhy0424.github.io/",
-      "avatar": "https://wsrv.nl/?url=maxlhy0424.github.io/__web__/avatar.png&filt=greyscale",
-      "descr": "代码即日记，commit 即足迹。"
+      "link": "https://maxlhy0424.is-a.dev/?From=XingYingBlog",
+      "avatar": "https://wsrv.nl/?url=maxlhy0424.is-a.dev/web/avatar.webp&filt=greyscale",
+      "descr": "Where All Miracle Begins."
     }
   ]
 }
