@@ -1,0 +1,459 @@
+.vh-comment {
+  box-sizing: border-box;
+  padding: 2rem 1rem 6.88rem;
+  width: 100%;
+  height: max-content;
+  border-radius: 0.5rem;
+  background-color: var(--vh-white-color);
+  box-shadow: var(--vh-box-shadow);
+  overflow: hidden;
+
+  // 评论样式
+  .twikoo {
+    font-size: 0.88rem;
+
+    img:not(.tk-avatar-img) {
+      cursor: pointer;
+    }
+
+    a {
+      cursor: pointer;
+    }
+
+    &:not(.tk-admin-container) {
+
+      // p标签样式
+      // ul标签样式
+      ul:not(.OwO-items):not(.OwO-packages),
+      ol {
+        li {
+          color: #33333388;
+          font-size: 0.875rem;
+          line-height: 1.6;
+        }
+
+        // 其下面的code标签样式
+        code {
+          background-color: transparent;
+        }
+
+        :not(pre) {
+          &>code {
+            background-color: var(--vh-font-16);
+            padding: .125rem .375rem;
+            font-size: 0.8125rem;
+          }
+        }
+
+      }
+
+      ul:not(.OwO-items):not(.OwO-packages),
+      ol {
+        padding-left: 1.25rem;
+      }
+
+      p {
+        color: var(--vh-font-color);
+        font-weight: 400;
+        font-size: 0.875rem;
+        line-height: 28px;
+
+
+        a {
+          color: var(--vh-font-56);
+          box-shadow: inset 0 -.12rem var(--vh-main-color);
+          transition: box-shadow .2s ease-in-out, color .2s ease-in-out;
+
+          &:hover {
+            box-shadow: inset 0 -1.5rem var(--vh-main-color-38);
+          }
+        }
+      }
+    }
+
+    .tk-admin {
+
+      .tk-login {
+        box-sizing: border-box;
+      }
+
+      p {
+        color: var(--vh-white-color);
+      }
+
+      .tk-admin-warn p {
+        color: #000;
+      }
+    }
+
+    // 评论输入框Focus边框颜色
+    .el-input__inner:focus,
+    .el-textarea__inner:focus {
+      border-color: #9999ff !important;
+    }
+
+    // 及背景颜色
+    .el-input-group__append,
+    .el-input-group__prepend {
+      background-color: var(--vh-white-88) !important;
+    }
+
+    // 评论内容样式
+    .tk-comments {
+
+      // 评论输入框样式
+      .tk-submit {
+        &>.tk-row {
+          &>.tk-col {
+            &>.tk-input.el-textarea {
+              box-sizing: border-box;
+              padding: 6px 0 26px;
+              border: 1px solid #f0f0f0;
+
+              &>textarea {
+                border: none;
+                min-height: 188px !important;
+
+                &::placeholder {
+                  line-height: 1.88;
+                }
+              }
+
+              &>span {
+                opacity: 0 !important;
+              }
+            }
+          }
+        }
+      }
+
+      .tk-comments-container {
+        .tk-comment {
+
+          // 作者的UI
+          &.tk-master {
+            &>.tk-main {
+              &>.tk-row {
+                &>.tk-meta {
+                  &>.tk-nick {
+                    position: relative;
+
+                    strong {
+                      color: #9999ff;
+                      line-height: 1.18rem;
+                    }
+
+                    &.tk-nick-link {
+                      cursor: pointer;
+
+                      &::after {
+                        position: absolute;
+                        content: "";
+                        right: 0;
+                        left: auto;
+                        bottom: 0;
+                        width: 0;
+                        height: 1px;
+                        background-color: #9999ff;
+                        transition: all 0.28s;
+                      }
+
+                      &:hover {
+                        &::after {
+                          left: 0;
+                          right: auto;
+                          width: 100%;
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
+            .tk-avatar {
+              position: relative;
+              overflow: visible;
+              box-shadow: 0px 0px 16px 0px rgba(0, 0, 0, 0.1);
+              user-select: none;
+
+              &>img.tk-avatar-img {
+                border-radius: 20%;
+              }
+
+              &::after {
+                content: "";
+                display: block;
+                position: absolute;
+                right: -0.4rem;
+                bottom: -0.4rem;
+                width: 0.8rem;
+                height: 0.8rem;
+                border-radius: 50%;
+                background: var(--vh-white-color) url("/public/assets/images/admin.svg") no-repeat;
+                background-size: cover;
+              }
+            }
+          }
+
+          &:nth-last-of-type(1) {
+            .tk-main {
+              border-bottom: none;
+            }
+          }
+
+          .tk-main {
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #ddd;
+
+            // 头部
+            .tk-row {
+              .tk-meta {
+                display: flex;
+                align-items: center;
+                gap: 0.36rem;
+
+                &>.tk-nick {
+                  position: relative;
+                  color: var(--vh-font-color);
+                  line-height: 1.18rem;
+
+                  &.tk-nick-link {
+                    cursor: pointer;
+
+                    &::after {
+                      position: absolute;
+                      content: "";
+                      right: 0;
+                      left: auto;
+                      bottom: 0;
+                      width: 0;
+                      height: 1px;
+                      background-color: var(--vh-font-88);
+                      transition: all 0.28s;
+                    }
+
+                    &:hover {
+                      &::after {
+                        left: 0;
+                        right: auto;
+                        width: 100%;
+                      }
+                    }
+                  }
+                }
+
+                .tk-tag {
+                  color: #000;
+                  border-color: #000;
+                  background-color: transparent;
+                  border-radius: 2px;
+                  font-size: 0.72rem;
+                  border-radius: 4px;
+                  font-weight: 700;
+                  line-height: 1.6;
+                }
+
+                .tk-time {
+                  color: #999;
+                }
+              }
+            }
+
+            // 内容
+            .tk-content {
+              margin: 0;
+
+              p {
+                padding: 0.18rem 0;
+              }
+
+              img {
+                width: auto;
+                max-height: 66px;
+                vertical-align: text-bottom;
+
+                &.tk-owo-emotion {
+                  height: 28px;
+                }
+              }
+
+              .tk-ruser {
+                font-weight: 700;
+              }
+            }
+
+            // UA信息
+            .tk-extras {
+              padding-bottom: 0.28rem;
+              font-size: 0.68rem;
+
+              .tk-extra {
+                box-sizing: border-box;
+                padding: 4px;
+                border-radius: 0.2rem;
+                background-color: var(--vh-font-6);
+              }
+            }
+
+            // 主体
+            &>.tk-replies {
+              padding-left: 1rem;
+              border-left: 0.25rem solid rgba(0, 0, 0, 0.06);
+            }
+          }
+        }
+      }
+    }
+
+    // 评论表情框样式
+    .OwO .OwO-body {
+      top: auto;
+      bottom: 100%;
+
+      .OwO-bar {
+        .OwO-packages {
+          flex-direction: row;
+          gap: 0;
+        }
+      }
+    }
+  }
+
+  div[data-waline] {
+    // 头像尺寸和圆角
+    --waline-avatar-size: 2.56rem;
+    --waline-avatar-radius: 0.58rem;
+    font-size: 0.88rem;
+
+    .wl-comment {
+      .wl-panel {
+        .wl-header {
+          label {
+            padding: 0.36rem 0.28rem;
+            font-size: 0.8rem;
+          }
+        }
+
+        .wl-input {
+          font-size: 0.688rem;
+        }
+      }
+    }
+
+    .wl-cards {
+      &>.wl-card-item {
+        padding-left: 0;
+
+        .wl-card {
+          padding-bottom: 0;
+
+          &>.wl-head {
+            .wl-nick {
+              color: var(--vh-font-color);
+              font-size: 0.88rem;
+              line-height: 1.18;
+
+              &::after {
+                position: absolute;
+                content: "";
+                right: 0;
+                left: auto;
+                bottom: 0;
+                width: 0;
+                height: 1px;
+                background-color: var(--vh-font-88);
+                transition: all 0.28s;
+              }
+
+              &:hover {
+                &::after {
+                  left: 0;
+                  right: auto;
+                  width: 100%;
+                }
+              }
+            }
+
+            .wl-badge {
+              color: #9999ff;
+              font-weight: 600;
+              border-color: #9999ff;
+            }
+          }
+
+          // &>.wl-meta {}
+
+          &>.wl-content {
+            padding: 0;
+
+            p {
+              padding: 0.18rem 0;
+              color: var(--vh-font-color);
+              font-size: 0.875rem;
+              line-height: 1.75rem;
+            }
+
+            &>p {
+              &:nth-of-type(1) {
+                padding: 0;
+              }
+
+              a {
+                color: var(--vh-font-color);
+                font-size: 0.76rem;
+                font-weight: 700;
+              }
+            }
+          }
+
+          &>.wl-quote {
+            border-left: solid 0.25rem var(--vh-main-color-38);
+          }
+        }
+
+        // item 中 wl-card 虚线间距
+        &>.wl-card {
+          padding-bottom: 1.25rem;
+          border-bottom-color: var(--vh-font-16);
+        }
+      }
+    }
+
+    .wl-emoji-popup .wl-tab-wrapper {
+      max-height: 126.88px;
+    }
+
+    // 图片
+    img {
+      &:not(.wl-user-avatar, .wl-reaction-list img, .wl-panel img, .tk-owo-emotion, .wl-emoji, .wl-login-nick>img) {
+        box-sizing: border-box;
+        padding: 0.188rem;
+        margin: 0.188rem 0;
+        border: solid 1px var(--vh-font-16);
+        display: block;
+        max-height: 66px;
+        object-fit: contain;
+        cursor: zoom-in;
+        cursor: -moz-zoom-in;
+        cursor: -webkit-zoom-in;
+      }
+
+      &.tk-owo-emotion,
+      &.wl-emoji {
+        height: 1.68rem;
+        object-fit: contain;
+        cursor: default;
+      }
+    }
+
+    a {
+      color: var(--vh-font-56);
+      line-height: 1.288;
+    }
+
+    code {
+      font-size: 0.68rem;
+    }
+  }
+}

@@ -1,0 +1,104 @@
+.vh-reward {
+  margin-top: 1rem;
+  box-sizing: border-box;
+  padding: 1.88rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.88rem;
+  width: 100%;
+  height: max-content;
+  border-radius: var(--vh-main-radius);
+  background-color: var(--vh-white-color);
+  box-shadow: var(--vh-box-shadow);
+
+  &>p {
+    padding: 0 !important;
+    width: 100%;
+    font-size: 0.75rem !important;
+    color: #7a7a7a;
+    text-align: center;
+  }
+
+  &>.reward-list {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.18rem;
+    width: 100%;
+    z-index: 1;
+
+    &>span {
+      position: relative;
+      box-sizing: border-box;
+      padding: 0 0.5rem;
+      padding-left: 1.88rem;
+      display: flex;
+      align-items: center;
+      width: max-content;
+      height: 2rem;
+      border-radius: 0.28rem;
+      color: var(--vh-white-color);
+      cursor: pointer;
+      transition: opacity 0.18s, transform 0.18s;
+      user-select: none;
+
+      &:hover {
+        transform: translateY(-0.12rem);
+
+        &::before {
+          pointer-events: auto;
+        }
+
+        &>img {
+          pointer-events: auto;
+          opacity: 1;
+          transform: translate(-50%, -1rem);
+        }
+      }
+
+      &::before {
+        pointer-events: none;
+        content: '';
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 100%;
+        width: calc(100vw - 1rem);
+        max-width: 258px;
+        height: 100%;
+      }
+
+      &>img {
+        opacity: 0;
+        pointer-events: none;
+        position: absolute;
+        left: 50%;
+        bottom: 100%;
+        transform: translate(-50%, 0);
+        width: calc(100vw - 1rem);
+        max-width: 258px;
+        max-height: max-content;
+        border-radius: 0.588rem;
+        aspect-ratio: 6/8;
+        background-size: cover;
+        z-index: 1;
+        overflow: hidden;
+
+        transition: opacity 0.18s, transform 0.18s;
+      }
+
+
+      &.alipay {
+        background: #00a0e8 url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20448%20512%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M377.7%2032H70.3C31.4%2032%200%2063.4%200%20102.3v307.5C0%20448.6%2031.4%20480%2070.3%20480h307.5c38.5%200%2069.8-31.1%2070.3-69.6-46-25.6-110.6-60.3-171.6-88.4-32.1%2044-84.1%2081-148.6%2081-70.6%200-93.7-45.3-97-76.4-4-39%2014.9-81.5%2099.5-81.5%2035.4%200%2079.4%2010.3%20127.1%2025%2016.5-30.1%2026.5-60.3%2026.5-60.3h-178.2v-16.7h92.1v-31.2H88.3v-19h109.4V92.3h50.9v50.4h109.4v19H248.6v31.2h88.8s-15.2%2046.6-38.4%2090.9c48.9%2016.7%20100%2036%20148.6%2052.7V102.3C447.8%2063.6%20416.4%2032%20377.7%2032zM47.3%20323c1%2020.2%2010.3%2053.7%2069.9%2053.7%2052.1%200%2092.6-39.7%20117.9-72.9-44.6-18.7-84.5-31.4-109.4-31.4-67.5%200-79.4%2033.1-78.4%2050.6z%22%2F%3E%3C%2Fsvg%3E') no-repeat;
+        background-size: 0.88rem auto;
+        background-position: 0.56rem center;
+      }
+
+      &.wechat {
+        background: #1aad19 url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20576%20512%22%3E%3Cpath%20fill%3D%22%23ffffff%22%20d%3D%22M385.2%20167.6c6.4%200%2012.6%20.3%2018.8%201.1C387.4%2090.3%20303.3%2032%20207.7%2032%20100.5%2032%2013%20104.8%2013%20197.4c0%2053.4%2029.3%2097.5%2077.9%20131.6l-19.3%2058.6%2068-34.1c24.4%204.8%2043.8%209.7%2068.2%209.7%206.2%200%2012.1-.3%2018.3-.8-4-12.9-6.2-26.6-6.2-40.8-.1-84.9%2072.9-154%20165.3-154zm-104.5-52.9c14.5%200%2024.2%209.7%2024.2%2024.4%200%2014.5-9.7%2024.2-24.2%2024.2-14.8%200-29.3-9.7-29.3-24.2%20.1-14.7%2014.6-24.4%2029.3-24.4zm-136.4%2048.6c-14.5%200-29.3-9.7-29.3-24.2%200-14.8%2014.8-24.4%2029.3-24.4%2014.8%200%2024.4%209.7%2024.4%2024.4%200%2014.6-9.6%2024.2-24.4%2024.2zM563%20319.4c0-77.9-77.9-141.3-165.4-141.3-92.7%200-165.4%2063.4-165.4%20141.3S305%20460.7%20397.6%20460.7c19.3%200%2038.9-5.1%2058.6-9.9l53.4%2029.3-14.8-48.6C534%20402.1%20563%20363.2%20563%20319.4zm-219.1-24.5c-9.7%200-19.3-9.7-19.3-19.6%200-9.7%209.7-19.3%2019.3-19.3%2014.8%200%2024.4%209.7%2024.4%2019.3%200%2010-9.7%2019.6-24.4%2019.6zm107.1%200c-9.7%200-19.3-9.7-19.3-19.6%200-9.7%209.7-19.3%2019.3-19.3%2014.5%200%2024.4%209.7%2024.4%2019.3%20.1%2010-9.9%2019.6-24.4%2019.6z%22%2F%3E%3C%2Fsvg%3E') no-repeat;
+        background-size: 1.08rem auto;
+        background-position: 0.56rem center;
+      }
+    }
+  }
+}

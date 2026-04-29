@@ -1,0 +1,37 @@
+section.vh-back-top {
+  position: fixed;
+  right: var(--vh-back-top);
+  bottom: 2rem;
+  width: 2.6rem;
+  height: 2.6rem;
+  border-radius: 50%;
+  border: 1px solid #e5e7eb;
+  background-color: var(--vh-white-color);
+  transform: translateX(1rem);
+  cursor: pointer;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transition: transform .188s, opacity .18s;
+  z-index: 9;
+
+  &.active {
+    transform: translateX(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  &>svg {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% + 1px);
+    height: calc(100% + 1px);
+
+    &.icon {
+      width: 66%;
+      height: 66%;
+    }
+  }
+}

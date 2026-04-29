@@ -1,0 +1,25 @@
+---
+import SITE_INFO from "@/config";
+import "./Reward.less";
+---
+
+{
+	SITE_INFO.Reward.AliPay && SITE_INFO.Reward.WeChat && (
+		<section class="vh-reward">
+			<p>喜欢这篇文章嘛，觉得文章不错的话，奖励奖励我！</p>
+			<div class="reward-list">
+				{SITE_INFO.Reward.AliPay && (
+					<span class="alipay">
+						<img src={SITE_INFO.Reward.AliPay} alt="支付宝打赏" />
+						支付宝
+					</span>
+				)}
+				{SITE_INFO.Reward.WeChat && (
+					<span class="wechat">
+						<img src={SITE_INFO.Reward.WeChat} alt="微信打赏" /> 微信
+					</span>
+				)}
+			</div>
+		</section>
+	)
+}

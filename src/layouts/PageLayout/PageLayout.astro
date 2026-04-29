@@ -1,0 +1,28 @@
+---
+const { frontmatter } = Astro.props;
+// 页面 Info
+import SITE_CONFIG from "@/config";
+const { Description, Title } = SITE_CONFIG;
+// 公共 Layout
+import Layout from "@/layouts/Layout/Layout.astro";
+// 评论组件
+import { checkComment } from "@/scripts/Comment";
+import Comment from "@/components/Comment/Comment.astro";
+// 关于样式
+import "@/styles/About.less";
+// 文章内容基础样式
+import "@/styles/ArticleBase.less";
+// PageLayout 样式
+import "./PageLayout.less";
+---
+
+<Layout title={frontmatter.title || Title} description={Description} activeNav={frontmatter.type || "-"}>
+	<section class="vh-page vh-about vh-animation vh-animation-init">
+		<header class="vh-page-header">
+			<h1>{frontmatter.h1}</h1>
+			<p>{frontmatter.desc}</p>
+		</header>
+		<main><slot /></main>
+		{checkComment() && frontmatter.comment != false && <Comment />}
+	</section>
+</Layout>

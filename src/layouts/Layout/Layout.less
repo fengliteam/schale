@@ -1,0 +1,39 @@
+main.main {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: max-content;
+  overflow: visible !important;
+
+  &>.main-inner {
+    flex-shrink: 0;
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row-reverse;
+    width: 100%;
+    max-width: var(--vh-main-max-width);
+    height: max-content;
+    z-index: 1;
+
+    &>.main-inner-content {
+      flex: 1 1 0%;
+      box-sizing: border-box;
+      padding: 0.88rem 0.66rem;
+      width: 100%;
+      min-width: 0;
+      height: max-content;
+      overflow: hidden;
+    }
+  }
+}
+
+@media screen and (max-width: 888px) {
+  main.main {
+    &>.main-inner {
+      flex-direction: column;
+    }
+  }
+}

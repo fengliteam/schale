@@ -1,0 +1,52 @@
+---
+const { data } = Astro.props;
+// 处理页码
+import { fmtPage } from "@/utils/index";
+// 翻页组件样式
+import "./Pagination.less";
+---
+
+<section class="vh-art-page">
+	<!-- 上一页 -->
+	<a class={`vh-pagination-item${!data.prev ? " disabled" : ""}`} href={data.prev || "javascript:;"} title="上一页">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M15 6l-6 6l6 6"></path></svg>
+	</a>
+	<!-- 首页 -->
+	{
+		data.first && data.prev && (
+			<a class={`vh-pagination-item`} href={data.first} title="第一页">
+				1
+			</a>
+		)
+	}
+	<!-- 总页的前一页 -->
+	{
+		(!data.next || !data.last) && data.prev && data.current !== "/2" && (
+			<a class={`vh-pagination-item`} href={data.prev} title={`第${fmtPage(data.prev)}页`}>
+				{fmtPage(data.prev)}
+			</a>
+		)
+	}
+	<!-- 当前页 -->
+	<a class="vh-pagination-item active" href="javascript:;" title={`第${fmtPage(data.current)}页`}>{fmtPage(data.current) || "1"}</a>
+	<!-- 第一页的后一页 -->
+	{
+		(!data.prev || !data.first) && data.next && data.last !== "/2" && (
+			<a class="vh-pagination-item" href={data.next} title={`第${fmtPage(data.next)}页`}>
+				{fmtPage(data.next)}
+			</a>
+		)
+	}
+	<!-- 总页 -->
+	{
+		data.next && data.last && (
+			<a class={`vh-pagination-item`} href={data.last} title={`第${fmtPage(data.last)}页`}>
+				{fmtPage(data.last)}
+			</a>
+		)
+	}
+	<!-- 下一页 -->
+	<a class={`vh-pagination-item${!data.next ? " disabled" : ""}`} href={data.next || "javascript:;"} title="下一页">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M9 6l6 6l-6 6"></path></svg>
+	</a>
+</section>

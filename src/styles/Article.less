@@ -1,0 +1,273 @@
+article.vh-article-main {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: max-content;
+
+  &>header {
+    box-sizing: border-box;
+    padding: 2rem 1rem 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: max-content;
+    background-color: var(--vh-white-color);
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+    box-shadow: var(--vh-box-shadow);
+    overflow: hidden;
+
+    &>h1 {
+      width: 100%;
+      font-weight: 700;
+    }
+
+    &>.article-meta {
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      gap: 0.88rem;
+      font-size: 0.85rem;
+      width: 100%;
+      height: 0.98rem;
+      overflow: hidden;
+
+
+      &>.article-meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.18rem;
+        width: max-content;
+
+        &>svg {
+          flex-shrink: 0;
+          height: 0.888rem;
+          width: auto;
+          object-fit: contain;
+        }
+
+        &>time {
+          color: var(--vh-font-66);
+        }
+
+        &>span {
+          &.count {
+            padding-left: 0.38rem;
+            color: #3FA67F;
+
+            strong {
+              color: #3FA67F;
+            }
+          }
+
+          &.time {
+            color: #E9B740;
+
+            strong {
+              color: #E9B740;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &>main {
+    box-sizing: border-box;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: max-content;
+    background-color: var(--vh-white-color);
+    border-bottom-left-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+    box-shadow: 0 12px 8px 6px #07111b0d;
+    overflow: hidden;
+
+    .aplayer-list {
+      max-height: max-content !important;
+
+      &>ol {
+        max-height: 566px !important;
+      }
+    }
+
+    .dplayer-controller {
+      span {
+        color: var(--vh-white-color);
+      }
+    }
+
+    &>.tag-list {
+      margin-top: 2rem;
+      position: relative;
+      box-sizing: border-box;
+      padding: 1rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.58rem;
+      width: 100%;
+
+      &>a {
+        position: relative;
+        box-sizing: border-box;
+        padding: 0 0.3125rem;
+        display: flex;
+        align-items: center;
+        gap: 0.28rem;
+        width: max-content;
+        height: 1.5rem;
+        color: var(--vh-info);
+        border-radius: 0.28rem;
+        font-size: 0.76rem;
+        transition: color 0.288s ease-in-out;
+        overflow: hidden;
+        z-index: 1;
+
+        &:hover {
+          color: var(--vh-main-color) !important;
+
+          &::before {
+            width: 100%;
+            left: 0;
+            right: auto;
+          }
+
+          &::after {
+            width: 0;
+            right: 0;
+            left: auto;
+          }
+        }
+
+        &::before,
+        &::after {
+          content: '';
+          position: absolute;
+          left: auto;
+          right: 0;
+          top: 0;
+          width: 0;
+          height: 100%;
+          z-index: 1;
+          transition: width 0.288s ease-in-out;
+          background-color: var(--vh-main-color-16);
+        }
+
+        &::after {
+          width: 100%;
+          left: 0;
+          right: auto;
+          z-index: -1;
+        }
+
+
+
+        &:nth-of-type(6n+1) {
+          color: var(--vh-default);
+
+          &::after {
+            background-color: var(--vh-default-hover);
+          }
+        }
+
+        &:nth-of-type(6n+2) {
+          color: var(--vh-info);
+
+          &::after {
+            background-color: var(--vh-info-hover);
+          }
+        }
+
+        &:nth-of-type(6n+3) {
+          color: var(--vh-success);
+
+          &::after {
+            background-color: var(--vh-success-hover);
+          }
+        }
+
+        &:nth-of-type(6n+4) {
+          color: var(--vh-warning);
+
+          &::after {
+            background-color: var(--vh-warning-hover);
+          }
+        }
+
+        &:nth-of-type(6n+5) {
+          color: var(--vh-error);
+
+          &::after {
+            background-color: var(--vh-error-hover);
+          }
+        }
+
+        &:nth-of-type(6n+6) {
+          color: var(--vh-import);
+
+          &::after {
+            background-color: var(--vh-import-hover);
+          }
+        }
+
+        &>svg {
+          height: 0.8rem;
+          width: auto;
+          object-fit: contain;
+          transform: rotate(90deg);
+        }
+      }
+    }
+  }
+
+  &>footer {
+    box-sizing: border-box;
+    width: 100%;
+    height: max-content;
+  }
+}
+
+@media screen and (max-width: 999px) {
+  article.vh-article-main {
+    &>header {
+      &>h1 {
+        font-size: 1.36rem;
+      }
+    }
+
+    h1 {
+      font-size: 1.36rem;
+    }
+
+    h2 {
+      font-size: 1.26rem;
+    }
+
+    h3 {
+      font-size: 1.125rem;
+    }
+
+    .vh-node {
+      &.vh-picture {
+        grid-template-columns: repeat(auto-fit, minmax(48%, 1fr));
+      }
+    }
+  }
+}
+
+// 旋转动画
+@keyframes vhRotate {
+  from {
+    transform: rotate(0deg);
+    /* 起始角度 */
+  }
+
+  to {
+    transform: rotate(360deg);
+    /* 结束角度 */
+  }
+}

@@ -1,0 +1,23 @@
+---
+import { getDescription, fmtTime } from "@/utils/index";
+const { post } = Astro.props;
+// 获取文章的摘要
+const description = getDescription(post);
+// 获取封面图
+import getCover from "@/utils/getCover";
+const ARTICLE_COVER: string = await getCover(post.data.cover);
+// 文章Item组件样式
+import "./ArticleCard.less";
+---
+
+<article class={`vh-article-item vh-animation vh-animation-init vh-article-link${post.data.top ? " active" : ""}`}>
+	<section class="vh-article-banner"><img src="/assets/images/lazy-loading.webp" data-vh-lz-src={ARTICLE_COVER} alt={post.data.title} /></section>
+	<header>
+		<h3><a class={`vh-article-cat vh-cat-${post.data.categories}`} href={`/categories/${post.data.categories}`}>{post.data.categories}</a><time>{fmtTime(post.data.date)}</time></h3>
+		<h1 class="title"><a class="vh-ellipsis" href={`/article/${post.data.id}`}>{post.data.title}</a></h1>
+	</header>
+	<h2 class="vh-article-excerpt vh-ellipsis line-2">{description}</h2>
+	<h4 class="vh-article-taglist vh-ellipsis">
+		{post.data.tags.map((tag: string) => <a href={`/tag/${tag}`}>{tag}</a>)}
+	</h4>
+</article>

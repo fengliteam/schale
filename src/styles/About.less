@@ -1,0 +1,53 @@
+.vh-about {
+  gap: 1.25rem;
+
+  &>main {
+    box-sizing: border-box;
+    padding: 1rem;
+    width: 100%;
+    height: max-content;
+    min-height: 5.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--vh-white-color);
+    box-shadow: var(--vh-box-shadow);
+    overflow: hidden;
+
+    &>h3 {
+      box-sizing: border-box;
+      padding: 0.88rem 0;
+      width: 100%;
+      height: max-content;
+      font-size: 1.125rem;
+    }
+
+    &>.language-tool {
+      padding-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.56rem;
+      width: 100%;
+      max-width: 100%;
+      height: max-content;
+
+      &>a {
+        width: max-content;
+        max-width: 100%;
+        height: 2rem;
+        line-height: 1;
+        overflow: hidden;
+        transition: transform 0.18s ease-in-out;
+
+        &>img {
+          height: calc(100% - 1px);
+          width: auto;
+          object-fit: contain;
+          border-bottom: 1px solid #2563eb;
+        }
+
+        &:hover {
+          transform: translateY(-0.12rem);
+        }
+      }
+    }
+  }
+}

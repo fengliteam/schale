@@ -1,0 +1,6 @@
+---
+const { src } = Astro.props;
+const svgContent = await import(`../../../public/assets/images/svg/${src}.svg?raw`).then(m => m.default);
+---
+
+{svgContent && <Fragment set:html={svgContent} />}

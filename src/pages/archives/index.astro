@@ -1,0 +1,18 @@
+---
+import { getArchiveList } from "@/utils/getArchive";
+// 获取归档列表
+const articleList = await getArchiveList();
+// 页面 Info
+import SITE_CONFIG from "@/config";
+const { Description } = SITE_CONFIG;
+// 公共 Layout
+import Layout from "@/layouts/Layout/Layout.astro";
+// 文章列表组件
+import Archive from "@/components/Archive/Archive.astro";
+---
+
+<Layout title="归档" description={Description} activeNav="archives">
+	<section class="vh-container">
+		<Archive articleList={articleList} />
+	</section>
+</Layout>

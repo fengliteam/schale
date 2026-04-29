@@ -1,0 +1,84 @@
+---
+import { getDescription, fmtTime } from "@/utils/index";
+import { type CollectionEntry, getCollection } from "astro:content";
+import { render } from "astro:content";
+export async function getStaticPaths() {
+	const posts = await getCollection("blog");
+	return posts.map((post: any) => ({ params: { article: post.data.id }, props: post }));
+}
+// 处理文章内容
+type Props = CollectionEntry<"blog">;
+const post: any = Astro.props;
+// 获取封面图
+import getCover from "@/utils/getCover";
+const ARTICLE_COVER: string = await getCover(post.data.cover);
+// 页面 Info
+import SITE_CONFIG from "@/config";
+const { Site, Title, Author, GoogleAds } = SITE_CONFIG;
+// 处理文章内容
+const description = getDescription(post);
+const { Content, remarkPluginFrontmatter } = await render(post);
+// 文章字数和阅读时间
+const { reading_time, article_word_count } = remarkPluginFrontmatter;
+// 公共 Layout
+import Layout from "@/layouts/Layout/Layout.astro";
+// Copyright 组件
+import Copyright from "@/components/Copyright/Copyright.astro";
+// Reward 组件
+import Reward from "@/components/Reward/Reward.astro";
+// 评论组件
+import { checkComment } from "@/scripts/Comment";
+import Comment from "@/components/Comment/Comment.astro";
+// Google 广告组件
+import GoogleAd from "@/components/GoogleAd/GoogleAd.astro";
+// 文章页面样式
+import "@/styles/Article.less";
+// 文章内容基础样式
+import "@/styles/ArticleBase.less";
+---
+
+<Layout title={post.data.title} keywords={post.data.tags} description={description} pagecover={ARTICLE_COVER}>
+	<article class="vh-article-main vh-animation vh-animation-init">
+		<header>
+			<h1>{post.data.title}</h1>
+			<div class="article-meta">
+				<span class="article-meta-item">
+					<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"></path><path d="M12 12h3.5"></path><path d="M12 7v5"></path></svg>
+					<time>{fmtTime(post.data.date, "YYYY-MM-DD A")}</time>
+					<span class="count"><strong>{article_word_count || "一点"}</strong>字</span>
+					<span class="time"><strong>{parseFloat((Number(reading_time) || 0).toFixed(1).replace(/\.0+$/, ""))}</strong>分钟</span>
+				</span>
+				<a class="article-meta-item" href={`/categories/${post.data.categories}`}>
+					<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 6h16"></path><path d="M7 12h13"></path><path d="M10 18h10"></path></svg>
+					<span>{post.data.categories}</span>
+				</a>
+			</div>
+		</header>
+		<main>
+			<Content />
+			<section class="tag-list">
+				{
+					(post.data.tags || []).map((i: any) => (
+						<a href={`/tag/${i}`}>
+							<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path stroke="none" d="M0 0h24v24H0z" fill="none" />
+								<path d="M7.5 7.5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+								<path d="M3 6v5.172a2 2 0 0 0 .586 1.414l7.71 7.71a2.41 2.41 0 0 0 3.408 0l5.592 -5.592a2.41 2.41 0 0 0 0 -3.408l-7.71 -7.71a2 2 0 0 0 -1.414 -.586h-5.172a3 3 0 0 0 -3 3z" />
+							</svg>
+							{i}
+						</a>
+					))
+				}
+			</section>
+		</main>
+		<footer>
+			<!-- 打赏组件 -->
+			{SITE_CONFIG.Reward && (SITE_CONFIG.Reward.AliPay || SITE_CONFIG.Reward.WeChat) && <Reward />}
+			<!-- 版权©️信息 -->
+			<Copyright site={Site} id={post.data.id} title={post.data.title} sitename={Title} time={fmtTime(post.data.date, "YYYY-MM-DD A")} auther={Author} />
+			<!-- 底部谷歌广告 -->
+			{GoogleAds.ad_Client && GoogleAds.articleAD_Slot && <GoogleAd className="vh-article-ad" slotID={GoogleAds.articleAD_Slot} />}
+		</footer>
+		{checkComment() && <Comment />}
+	</article>
+</Layout>

@@ -1,0 +1,115 @@
+header.vh-header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  width: 100vw;
+  height: 66px;
+  backdrop-filter: blur(2rem);
+  background-color: rgba(255, 255, 255, 0.36);
+  box-shadow: var(--vh-box-shadow);
+  transition: background-color 0.18s ease-in-out;
+  z-index: 9;
+
+  &>section {
+    margin: 0 auto;
+    box-sizing: border-box;
+    padding: 0 0.88rem;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    max-width: var(--vh-main-max-width);
+
+    &>.home {
+      box-sizing: border-box;
+      padding: 0.266rem 0.188rem;
+      display: flex;
+      align-items: center;
+      gap: 0.618rem;
+      width: max-content;
+      height: max-content;
+      color: var(--vh-font-color);
+
+      &:hover {
+        &>span {
+          color: var(--vh-white-color);
+        }
+      }
+
+      &>span {
+        font-size: 0.98rem;
+        font-weight: 600;
+        padding-top: 0.188rem;
+        transition: all 0.1s;
+        font-weight: 700;
+      }
+
+      &>svg {
+        height: 1.5rem;
+        width: auto;
+        object-fit: contain;
+      }
+    }
+
+    &>nav {
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      gap: 1.18rem;
+      height: 100%;
+
+      &>.nav-link {
+        box-sizing: border-box;
+        padding: 0.288rem 0.36rem;
+        display: flex;
+        align-items: center;
+        gap: 0.28rem;
+        line-height: inherit;
+        height: max-content;
+        font-size: 0.98rem;
+        font-weight: 600;
+        user-select: none;
+
+        &.search-btn,
+        &.menu-btn {
+          cursor: pointer;
+        }
+
+        &.menu-btn {
+          display: none;
+
+          &>svg {
+            height: 1.28rem;
+          }
+        }
+
+        &>svg {
+          height: 1rem;
+          width: auto;
+          object-fit: contain;
+        }
+
+      }
+    }
+  }
+}
+
+
+
+@media screen and (max-width: 888px) {
+  header.vh-header {
+    &>section {
+      &>nav {
+        &>a.nav-link {
+          display: none;
+        }
+
+        &>.menu-btn.nav-link {
+          display: flex;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,70 @@
+---
+const { title, keywords, description, pagecover, activeNav, Home } = Astro.props;
+// 网站配置
+import SITE_INFO from "@/config";
+const { GoogleAds, Theme, HomeBanner } = SITE_INFO;
+const { ad_Client, asideAD_Slot, articleAD_Slot } = GoogleAds;
+// Head 依赖
+import Head from "@/components/Head/Head.astro";
+// 顶部 Header
+import Header from "@/components/Header/Header.astro";
+// Main 区域 Header
+import MainHeader from "@/components/MainHeader/MainHeader.astro";
+// Aside组件
+import Aside from "@/components/Aside/Aside.astro";
+// 底部 Footer
+import Footer from "@/components/Footer/Footer.astro";
+// 返回顶部
+import BackTop from "@/components/BackTop/BackTop.astro";
+// 手机端侧边栏
+import MobileSidebar from "@/components/MobileSidebar/MobileSidebar.astro";
+// A Modern CSS Reset
+import "@/styles/Reset.less";
+// 全局基础样式
+import "@/styles/Base.less";
+// Layout 样式
+import "./Layout.less";
+---
+
+
+<html lang="zh-CN">
+	<Head Title={title} Keywords={keywords} Description={description} PageCover={pagecover}>
+		<!-- 谷歌广告JS加载项 -->
+		{ad_Client && (asideAD_Slot || articleAD_Slot) && <script is:inline async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ad_Client}`} crossorigin="anonymous" />}
+		<!-- 彩旗🎈 -->
+		<script is:inline src="/assets/js/vhCaiqi.js" defer></script>
+		<!-- 设置主题颜色 -->
+		<Fragment
+			set:html={`<style>:root {${Object.entries(Theme)
+				.map(([key, value]) => `${key}:${value};`)
+				.join("")}--vh-main-header-height:${Home ? HomeBanner.HomeHeight : HomeBanner.PageHeight};--vh-home-banner:${HomeBanner.background}}</style>`}
+		/>
+	</Head>
+<script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "rtask631qj");
+</script>
+	<body>
+		<MobileSidebar />
+		<Header activeNav={activeNav} />
+		<main class="main">
+			{HomeBanner.enable && <MainHeader />}
+			<section class="main-inner" style={`padding-top:${HomeBanner.enable ? "0.88rem" : "calc(66px + 0.68rem)"}`}>
+				<section class="main-inner-content">
+					<slot />
+				</section>
+				<Aside />
+			</section>
+			<BackTop />
+		</main>
+		<Footer />
+		<script>
+			import InitFn from "@/scripts/Init";
+			// 全局初始化
+			InitFn();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,22 @@
+---
+import { getCategoriesList } from "@/utils/getArchive";
+import { getCollection } from "astro:content";
+export async function getStaticPaths(): Promise<any> {
+	const posts = await getCollection("blog");
+	return posts.map((post: any) => ({ params: { categories: post.data.categories }, props: post }));
+}
+// 获取分类列表
+const { categories } = Astro.params;
+const articleList = await getCategoriesList(categories);
+// 页面 Info
+import SITE_CONFIG from "@/config";
+const { Description } = SITE_CONFIG;
+// 公共 Layout
+import Layout from "@/layouts/Layout/Layout.astro";
+// 文章列表组件
+import Archive from "@/components/Archive/Archive.astro";
+---
+
+<Layout title={`分类 ${categories} 下的文章`} description={Description} activeNav="categories">
+	<Archive articleList={articleList} />
+</Layout>

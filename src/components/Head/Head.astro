@@ -1,0 +1,64 @@
+---
+import SITE_CONFIG from "@/config";
+// 当前页面的 URL 元地址
+const canonicalData = new URL(Astro.url.pathname, Astro.site);
+const canonicalURL = canonicalData.href.replace(/\/+$/, "");
+// 页面内容的元数据
+const { Title, Keywords, Description, PageCover } = Astro.props;
+const { Site, Title: SiteName, Subtitle, Author, Cover, DNSOptimization } = SITE_CONFIG;
+const WebTitle = Title || SiteName;
+const SiteCover = Site + Cover;
+const WebCover = PageCover || SiteCover;
+// Schema.org 结构化数据（JSON-LD）
+const WebSiteData = { "@context": "https://schema.org", "@type": "WebSite", url: canonicalURL, name: WebTitle, description: Description, inLanguage: "zh-CN", image: WebCover, publisher: { "@type": "Organization", name: WebTitle, logo: { "@type": "ImageObject", url: SiteCover } } };
+const ArticleData = { "@context": "https://schema.org", "@type": "BlogPosting", mainEntityOfPage: { "@type": "WebPage", "@id": canonicalURL }, headline: WebTitle, description: Description, image: [WebCover], datePublished: new Date().toISOString().replace("Z", `+08:00`), dateModified: new Date().toISOString().replace("Z", `+08:00`), author: { "@type": "Person", name: Author, url: Site }, publisher: { "@type": "Organization", name: SiteName, logo: { "@type": "ImageObject", url: SiteCover } }, keywords: (Keywords || ["Astro", "分享", "博客"]).join(", ") };
+
+// 基础 样式
+import "@/styles/Base.less";
+---
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+	<title>{Title ? `${Title} | ${SiteName}` : `${SiteName} - ${Subtitle}`}</title>
+	<meta name="keywords" content={(Keywords || ["Astro", "分享", "博客"]).join(", ")} />
+	<meta name="description" content={Description} />
+	<meta name="format-detection" content="telephone=no, email=no, date=no, address=no" />
+	<!-- 元数据 -->
+	<meta name="title" content={WebTitle} />
+	<meta name="site" content={Site} />
+	<meta name="author" content={Author} />
+	<meta name="generator" content={Astro.generator} />
+	<meta name="robots" content="index, follow, max-image-preview:large" />
+	<meta itemprop="image" content={WebCover} />
+	<!-- Open Graph -->
+	<meta property="article:author" content={Author} />
+	<meta property="og:type" content={PageCover ? "article" : "website"} />
+	<meta property="og:site_name" content={SiteName} />
+	<meta property="og:title" content={WebTitle} />
+	<meta property="og:description" content={Description} />
+	<meta property="og:url" content={canonicalURL} />
+	<meta property="og:image" content={WebCover} />
+	<meta property="og:locale" content="zh_CN" />
+	<!-- Twitter -->
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:site" content={SiteName} />
+	<meta name="twitter:creator" content={Author} />
+	<meta name="twitter:title" content={WebTitle} />
+	<meta name="twitter:description" content={Description} />
+	<meta name="twitter:url" content={canonicalURL} />
+	<meta name="twitter:image" content={WebCover} />
+	<!-- 输出结构化数据 -->
+	<script type="application/ld+json" set:html={JSON.stringify(PageCover ? ArticleData : WebSiteData)} is:inline />
+	<!-- Sitemap -->
+	<link rel="sitemap" href="/sitemap-index.xml" />
+	<!-- DNS预解析 -->
+	{DNSOptimization.map((url: string) => <link rel="dns-prefetch" href={url} />)}
+	{DNSOptimization.map((url: string) => <link rel="preconnect" href={url} />)}
+	<!-- LINK 标签 -->
+	<link rel="canonical" href={canonicalURL} />
+	<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+	<slot />
+</head>

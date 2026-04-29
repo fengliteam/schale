@@ -1,0 +1,35 @@
+---
+// 当前路由
+const { activeNav } = Astro.props;
+// 站点配置
+import SITE_CONFIG from "@/config";
+const { Navs } = SITE_CONFIG;
+// Svg 组件
+import Svg from "@/components/Svg/Svg.astro";
+// 搜索框组件
+import Search from "@/components/Search/Search.astro";
+// 顶部 Header 样式
+import "./Header.less";
+---
+
+<header class="vh-header">
+	<section class="main">
+		<a href="/" class="home vh-hover">
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M19 8.71l-5.333 -4.148a2.666 2.666 0 0 0 -3.274 0l-5.334 4.148a2.665 2.665 0 0 0 -1.029 2.105v7.2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-7.2c0 -.823 -.38 -1.6 -1.03 -2.105"></path><path d="M16 15c-2.21 1.333 -5.792 1.333 -8 0"></path></svg>
+			<span>Home</span>
+		</a>
+		<nav>
+			{
+				Navs.map(i => (
+					<a class={`nav-link vh-hover${i.link.includes(activeNav) ? " active" : ""}`} href={i.link} target={i.target ? "_blank" : "_self"}>
+						{i.text}
+						<Svg src={i.icon} />
+					</a>
+				))
+			}
+			<span class="nav-link vh-hover search-btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0"></path><path d="M21 21l-6 -6"></path></svg> 搜索</span>
+			<span class="nav-link vh-hover menu-btn"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><path d="M4 6h16"></path><path d="M7 12h13"></path><path d="M10 18h10"></path></svg></span>
+		</nav>
+		<Search />
+	</section>
+</header>

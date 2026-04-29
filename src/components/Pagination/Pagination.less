@@ -1,0 +1,61 @@
+section.vh-art-page {
+  position: absolute;
+  bottom: 0.88rem;
+  right: 0;
+  box-sizing: border-box;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  height: max-content;
+  overflow: hidden;
+
+  &>a.vh-pagination-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0.5rem;
+    background-color: var(--vh-white-color);
+    box-shadow: var(--vh-box-shadow);
+    font-size: 0.875rem;
+    color: #99a9bf;
+    user-select: none;
+    transition: background-color 0.18s ease-in-out;
+    cursor: pointer;
+    overflow: hidden;
+
+    &:hover {
+      color: var(--vh-white-color);
+      background-color: rgba(129, 146, 174, 0.36);
+
+      &>svg {
+        color: var(--vh-white-color);
+      }
+    }
+
+    &.active {
+      background-color: #8192AE;
+      cursor: default;
+      pointer-events: none;
+      color: var(--vh-white-color);
+    }
+
+    &.disabled {
+      pointer-events: none;
+
+      &>svg {
+        color: var(--vh-font-16);
+      }
+    }
+
+    &>svg {
+      height: 1.18rem;
+      width: auto;
+      object-fit: contain;
+    }
+  }
+}

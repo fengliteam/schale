@@ -1,0 +1,122 @@
+.vh-footer {
+  margin-top: 1.68rem;
+  box-sizing: border-box;
+  padding: 2.6rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: max-content;
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: saturate(100%) blur(2px);
+  user-select: none;
+
+  &>main {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0.618rem;
+    width: 100%;
+    max-width: var(--vh-main-max-width);
+    height: max-content;
+
+    &>p {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 0.618rem;
+      line-height: 1;
+
+      &>a {
+        line-height: 1;
+      }
+
+      &>span {
+        box-sizing: border-box;
+        padding-left: 0.28rem;
+        display: flex;
+        align-items: center;
+        width: max-content;
+        height: 1.25rem;
+        background-color: #25C2A0;
+        font-size: 0.68rem;
+        border-radius: 0.18rem;
+        overflow: hidden;
+
+        &>cite,
+        &>em {
+          box-sizing: border-box;
+          padding: 0 0.618rem;
+          width: max-content;
+          height: 100%;
+          line-height: 1.25rem;
+          color: var(--vh-white-color);
+          font-style: normal;
+        }
+
+        &>cite {
+          padding-left: 0.28rem;
+        }
+
+        &>em {
+          background-color: #5D5D5D;
+        }
+
+        &>svg {
+          width: 0.88rem;
+          height: 0.88rem;
+        }
+      }
+
+      img {
+        height: 100%;
+        width: auto;
+        object-fit: contain;
+      }
+    }
+  }
+
+  &>section {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 0.88rem;
+    width: 100%;
+    height: max-content;
+
+    p {
+      line-height: 1;
+
+      a {
+        line-height: 1;
+      }
+    }
+
+    &.text {
+      &>p {
+
+        font-size: 0.88rem;
+
+        &>a {
+          color: #94A3B8;
+          transition: opacity 0.18s ease-in-out;
+
+          &:hover {
+            opacity: 0.88;
+          }
+        }
+      }
+    }
+
+    &.icon {
+      &>p {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 1rem;
+      }
+    }
+  }
+
+}

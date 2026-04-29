@@ -1,0 +1,27 @@
+---
+import SITE_CONFIG from "@/config";
+const { Navs, Title } = SITE_CONFIG;
+// Svg 组件
+import Svg from "@/components/Svg/Svg.astro";
+// 侧边栏 MobileSidebar 样式
+import "./MobileSidebar.less";
+---
+
+<nav class="vh-mobilesidebar">
+	<section class="main">
+		<div class="vh-mobilesidebar-list user-panel">
+			<h3>{Title}</h3>
+		</div>
+
+		<div class="vh-mobilesidebar-list vh-link-list">
+			{
+				Navs.map(i => (
+					<a class={i.link.replace("/", "")} href={i.link} target={i.target ? "_blank" : "_self"}>
+						<Svg src={i.icon} />
+						{i.text}
+					</a>
+				))
+			}
+		</div>
+	</section>
+</nav>
