@@ -3,55 +3,56 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Schale · 内容管理</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      background: #f8f9fa;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-    }
-    .login-brand {
-      text-align: center;
-      padding: 2rem;
-    }
-    .login-brand h1 {
-      font-size: 2rem;
-      font-weight: 700;
-      color: #1a1a2e;
-      letter-spacing: -0.5px;
-    }
-    .login-brand h1 span {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    .login-brand p {
-      color: #6c757d;
-      margin-top: 0.5rem;
-      font-size: 0.95rem;
-    }
-    .login-brand .badge {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.25rem 1rem;
-      background: #e9ecef;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      color: #495057;
-      letter-spacing: 0.3px;
-    }
-  </style>
+  <title>博客后台管理</title>
 </head>
 <body>
-  <div class="login-brand">
-    <h1>📝 <span>Schale</span></h1>
-    <p>博客内容管理后台</p>
-    <span class="badge">Decap CMS · v3</span>
-  </div>
+  <script>
+    // 内联配置，无需外部 config.yml
+    window.CMS_CONFIG = {
+      backend: {
+        name: "github",
+        repo: "fengliteam/schale",
+        branch: "main",
+        auth_endpoint: "https://www.xingying.us.kg/api/auth"
+      },
+      media_folder: "public/img/uploads",
+      public_folder: "/img/uploads",
+      collections: [
+        {
+          name: "blog",
+          label: "📄 博客文章",
+          label_singular: "文章",
+          folder: "src/content/blog",
+          create: true,
+          slug: "{{slug}}",
+          path: "{{slug}}/index",
+          preview_path: "article/{{slug}}",
+          fields: [
+            { name: "title", label: "文章标题", widget: "string" },
+            { name: "date", label: "发布日期", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false },
+            { name: "updated", label: "更新日期", widget: "datetime", required: false, date_format: "YYYY-MM-DD", time_format: false },
+            { name: "categories", label: "分类", widget: "string", required: false },
+            { name: "tags", label: "标签", widget: "list", required: false },
+            { name: "cover", label: "封面图", widget: "image", required: false },
+            { name: "recommend", label: "⭐ 推荐文章", widget: "boolean", default: false },
+            { name: "top", label: "📌 置顶文章", widget: "boolean", default: false },
+            { name: "hide", label: "🙈 隐藏文章", widget: "boolean", default: false },
+            { name: "type", label: "页面类型", widget: "select", options: [{ label: "普通文章", value: "" }, { label: "友链页", value: "links" }], default: "" },
+            { name: "comment", label: "开启评论", widget: "boolean", default: true },
+            { name: "body", label: "正文内容", widget: "markdown" }
+          ],
+          sortable_fields: ["date", "title"],
+          default_sort: ["date", "desc"],
+          view_filters: [
+            { label: "全部文章", field: "hide", pattern: false },
+            { label: "已隐藏", field: "hide", pattern: true },
+            { label: "置顶文章", field: "top", pattern: true },
+            { label: "推荐文章", field: "recommend", pattern: true }
+          ]
+        }
+      ]
+    };
+  </script>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
