@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 export default async function handler(req, res) {
-  const { method, query } = req;
+  const { method, query, url } = req;
 
   if (method !== 'GET') {
     res.status(405).send('Method Not Allowed');
@@ -11,10 +11,12 @@ export default async function handler(req, res) {
 
   const { code } = query;
 
-  // ===== 第一步：没有 code，发起 GitHub OAuth 授权 =====
+  // ============================================================
+  // 路由1: /auth - 发起 GitHub OAuth 授权
+  // ============================================================
   if (!code) {
     const clientId = process.env.OAUTH_GITHUB_CLIENT_ID;
-    const redirectUri = 'https://www.xingying.us.kg/api/auth';
+    const redirectUri = 'https://www.xingying.us.kg/api/auth/callback';
     const scope = query.scope || 'repo';
     const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope}`;
 
@@ -24,7 +26,9 @@ export default async function handler(req, res) {
     return;
   }
 
-  // ===== 第二步：有 code，交换 access_token =====
+  // ============================================================
+  // 路由2: /callback - 处理 GitHub 回调，通过 postMessage 传递 token
+  // ============================================================
   const clientId = process.env.OAUTH_GITHUB_CLIENT_ID;
   const clientSecret = process.env.OAUTH_GITHUB_CLIENT_SECRET;
 
@@ -52,7 +56,7 @@ export default async function handler(req, res) {
       throw new Error('No access_token in response');
     }
 
-    // ===== 第三步：返回 HTML 页面，通过 postMessage 传递 token =====
+    // ===== 官方标准方式：通过 postMessage 将 token 传回主窗口 =====
     const html = `
 <!DOCTYPE html>
 <html>
@@ -68,7 +72,7 @@ export default async function handler(req, res) {
 
       if (window.opener) {
         try {
-          // 发送 token 给父窗口（CMS 主页面）
+          // 官方标准格式：发送给 Decap CMS 的 message 监听器
           window.opener.postMessage({
             type: 'authorization:github:success',
             payload: {
@@ -77,8 +81,8 @@ export default async function handler(req, res) {
             }
           }, 'https://www.xingying.us.kg');
           console.log('✅ postMessage sent to opener');
-          // 延迟关闭窗口，确保消息发送
-          setTimeout(() => {
+          // 延迟关闭窗口
+          setTimeout(function() {
             window.close();
           }, 300);
         } catch (e) {
@@ -86,12 +90,12 @@ export default async function handler(req, res) {
           window.close();
         }
       } else {
-        console.warn('⚠️ No opener found, redirecting to CMS');
+        console.warn('⚠️ No opener found');
         window.location.href = 'https://www.xingying.us.kg/admin/index.html';
       }
     })();
   </script>
-  <div style="text-align: center; padding-top: 50px; font-family: sans-serif;">
+  <div style="text-align:center;padding-top:50px;font-family:sans-serif;">
     <h2>✅ 授权成功！</h2>
     <p>正在返回 CMS，请稍候...</p>
   </div>
