@@ -8,13 +8,24 @@
 <body>
   <script>
     // ============================================================
-    // 1. 检查 URL 参数中是否有 token
+    // 1. 处理 URL 中的 token，存入 localStorage，并清除 URL 参数
     // ============================================================
-    const urlParams = new URLSearchParams(window.location.search);
-    const tokenFromUrl = urlParams.get('token');
+    (function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tokenFromUrl = urlParams.get('token');
+      if (tokenFromUrl) {
+        localStorage.setItem('github_token', tokenFromUrl);
+        // 清除 URL 中的 token 参数（避免刷新后重复）
+        if (window.history && window.history.replaceState) {
+          const cleanUrl = window.location.origin + window.location.pathname;
+          window.history.replaceState({}, document.title, cleanUrl);
+        }
+        console.log('✅ Token saved to localStorage');
+      }
+    })();
 
     // ============================================================
-    // 2. 配置 CMS（使用 window.CMS_CONFIG，让 Decap CMS 自动初始化）
+    // 2. 定义 CMS 配置
     // ============================================================
     const CMS_CONFIG = {
       backend: {
@@ -22,7 +33,19 @@
         repo: "fengliteam/schale",
         branch: "main",
         base_url: "https://www.xingying.us.kg",
-        auth_endpoint: "/api/auth"
+        auth_endpoint: "/api/auth",
+        // 自定义认证函数：如果 localStorage 有 token，直接返回；否则走默认 OAuth
+        auth: function() {
+          const token = localStorage.getItem('github_token');
+          if (token) {
+            console.log('🔑 Using token from localStorage:', token);
+            return Promise.resolve({ token: token });
+          } else {
+            console.log('ℹ️ No token found, using default OAuth flow');
+            // 返回 undefined 让 CMS 使用默认行为（弹出窗口）
+            return Promise.resolve(null);
+          }
+        }
       },
       media_folder: "public/img/uploads",
       public_folder: "/img/uploads",
@@ -62,31 +85,33 @@
       ]
     };
 
-    // 如果 URL 中有 token，则直接注入到配置中
-    if (tokenFromUrl) {
-      // 保存 token 到 localStorage
-      localStorage.setItem('github_token', tokenFromUrl);
-      
-      // 清除 URL 中的 token 参数（避免刷新后再次触发）
-      if (window.history && window.history.replaceState) {
-        const cleanUrl = window.location.origin + window.location.pathname;
-        window.history.replaceState({}, document.title, cleanUrl);
-      }
-
-      // 自定义 auth 方法，直接返回 token
-      CMS_CONFIG.backend.auth = function() {
-        return Promise.resolve(tokenFromUrl);
-      };
-    }
-
-    // 注入配置（让 Decap CMS 自动初始化，而不是手动调用 CMS.init()）
-    window.CMS_CONFIG = CMS_CONFIG;
-
-    // 注意：不要设置 window.CMS_MANUAL_INIT = true
-    // 让 Decap CMS 使用自动初始化，它会自动读取 window.CMS_CONFIG
+    // ============================================================
+    // 3. 启用手动初始化，并加载 CMS 脚本
+    // ============================================================
+    window.CMS_MANUAL_INIT = true;
+    console.log('🔄 CMS_MANUAL_INIT set to true');
   </script>
 
-  <!-- 引入 Decap CMS，它会自动初始化并读取 window.CMS_CONFIG -->
+  <!-- 加载 Decap CMS -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+
+  <script>
+    // 等待 CMS 加载完成后，手动初始化
+    function initCMS() {
+      if (typeof window.CMS !== 'undefined') {
+        console.log('🚀 Initializing CMS with config');
+        window.CMS.init(CMS_CONFIG);
+      } else {
+        console.log('⏳ Waiting for CMS to load...');
+        setTimeout(initCMS, 200);
+      }
+    }
+    // 在 DOM 加载完成后执行
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initCMS);
+    } else {
+      initCMS();
+    }
+  </script>
 </body>
 </html>

@@ -11,20 +11,16 @@ export default async function handler(req, res) {
 
   const { code } = query;
 
-  // ===== 第一步：没有 code，发起 GitHub OAuth 授权 =====
   if (!code) {
     const clientId = process.env.OAUTH_GITHUB_CLIENT_ID;
     const redirectUri = 'https://www.xingying.us.kg/api/auth';
     const scope = query.scope || 'repo';
     const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope}`;
-
-    console.log('Redirecting to GitHub:', authUrl);
     res.writeHead(302, { Location: authUrl });
     res.end();
     return;
   }
 
-  // ===== 第二步：有 code，交换 access_token =====
   const clientId = process.env.OAUTH_GITHUB_CLIENT_ID;
   const clientSecret = process.env.OAUTH_GITHUB_CLIENT_SECRET;
 
@@ -52,16 +48,13 @@ export default async function handler(req, res) {
       throw new Error('No access_token in response');
     }
 
-    // ===== 第三步：重定向到 CMS 页面，并在 URL 中携带 token =====
+    // 重定向到 CMS 页面，携带 token
     const redirectUrl = `https://www.xingying.us.kg/admin/index.html?token=${access_token}`;
     console.log('✅ Token obtained, redirecting to:', redirectUrl);
     res.writeHead(302, { Location: redirectUrl });
     res.end();
   } catch (error) {
     console.error('OAuth error:', error.message);
-    if (error.response) {
-      console.error('GitHub API error data:', error.response.data);
-    }
     res.status(500).json({ error: 'Authentication failed' });
   }
 }
