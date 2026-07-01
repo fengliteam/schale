@@ -7,14 +7,13 @@
 </head>
 <body>
   <script>
-    // ===== Decap CMS 内联配置（无需外部 config.yml） =====
     window.CMS_CONFIG = {
       backend: {
         name: "github",
         repo: "fengliteam/schale",
         branch: "main",
-        base_url: "https://www.xingying.us.kg",          // 基础 URL
-        auth_endpoint: "/api/auth"                       // 相对路径，避免重复拼接
+        base_url: "https://www.xingying.us.kg",
+        auth_endpoint: "/api/auth"    // 相对路径
       },
       media_folder: "public/img/uploads",
       public_folder: "/img/uploads",
