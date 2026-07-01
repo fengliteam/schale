@@ -23,23 +23,32 @@
     })();
 
     // ============================================================
-    // 2. 配置对象
+    // 2. 启用手动初始化（必须在加载 CMS 脚本之前设置）
+    // ============================================================
+    window.CMS_MANUAL_INIT = true;
+    console.log('🔄 CMS_MANUAL_INIT set to true');
+
+    // ============================================================
+    // 3. 完整的 CMS 配置对象
     // ============================================================
     const CMS_CONFIG = {
+      // ★★★ 关键：忽略外部的 config.yml 文件 ★★★
+      load_config_file: false,
       backend: {
         name: "github",
         repo: "fengliteam/schale",
         branch: "main",
         base_url: "https://www.xingying.us.kg",
         auth_endpoint: "/api/auth",
-        // 自定义认证：如果 localStorage 有 token，直接返回
+        // 自定义认证：优先使用 localStorage 中的 token
         auth: function() {
           const token = localStorage.getItem('github_token');
           if (token) {
             console.log('🔑 Using token from localStorage');
+            // ★★★ 必须返回一个包含 token 字段的对象 ★★★
             return Promise.resolve({ token: token });
           }
-          // 否则返回 null 让 CMS 使用默认 OAuth 流程
+          // 返回 null 让 CMS 使用默认 OAuth 流程
           return Promise.resolve(null);
         }
       },
@@ -80,28 +89,24 @@
         }
       ]
     };
-
-    // ============================================================
-    // 3. 启用手动初始化
-    // ============================================================
-    window.CMS_MANUAL_INIT = true;
-    console.log('🔄 CMS_MANUAL_INIT set to true');
   </script>
 
   <!-- 加载 Decap CMS -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
   <script>
-    // 等待 CMS 加载完成后手动初始化
+    // 等待 CMS 加载完成后，使用配置对象进行初始化
     function initCMS() {
       if (typeof window.CMS !== 'undefined') {
         console.log('🚀 Initializing CMS with config');
-        window.CMS.init(CMS_CONFIG);
+        // ★★★ 通过 init 函数传入配置 ★★★
+        window.CMS.init({ config: CMS_CONFIG });
       } else {
         console.log('⏳ Waiting for CMS to load...');
         setTimeout(initCMS, 200);
       }
     }
+
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initCMS);
     } else {
