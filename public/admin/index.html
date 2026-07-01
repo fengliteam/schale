@@ -14,7 +14,7 @@
     const tokenFromUrl = urlParams.get('token');
 
     // ============================================================
-    // 2. 配置 CMS（如果 token 存在，则跳过 OAuth 认证）
+    // 2. 配置 CMS（使用 window.CMS_CONFIG，让 Decap CMS 自动初始化）
     // ============================================================
     const CMS_CONFIG = {
       backend: {
@@ -62,9 +62,9 @@
       ]
     };
 
-    // 如果 URL 中有 token，则直接注入到配置中，并启用手动初始化
+    // 如果 URL 中有 token，则直接注入到配置中
     if (tokenFromUrl) {
-      // 保存 token 到 localStorage（以便刷新页面后仍保持登录）
+      // 保存 token 到 localStorage
       localStorage.setItem('github_token', tokenFromUrl);
       
       // 清除 URL 中的 token 参数（避免刷新后再次触发）
@@ -77,40 +77,16 @@
       CMS_CONFIG.backend.auth = function() {
         return Promise.resolve(tokenFromUrl);
       };
-      
-      // 启用手动初始化
-      window.CMS_MANUAL_INIT = true;
-    } else {
-      // 如果 localStorage 中有 token，也可以用（但这里不自动使用，让用户点击登录）
-      // 我们仍然使用默认 OAuth 流程
-      window.CMS_MANUAL_INIT = false;
     }
 
-    // 注入配置
+    // 注入配置（让 Decap CMS 自动初始化，而不是手动调用 CMS.init()）
     window.CMS_CONFIG = CMS_CONFIG;
+
+    // 注意：不要设置 window.CMS_MANUAL_INIT = true
+    // 让 Decap CMS 使用自动初始化，它会自动读取 window.CMS_CONFIG
   </script>
 
+  <!-- 引入 Decap CMS，它会自动初始化并读取 window.CMS_CONFIG -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-
-  <script>
-    // 如果启用了手动初始化，则调用 CMS.init()
-    if (window.CMS_MANUAL_INIT) {
-      // 等待脚本加载完成
-      document.addEventListener('DOMContentLoaded', function() {
-        // 如果 CMS 尚未定义，稍等片刻
-        if (typeof window.CMS !== 'undefined') {
-          window.CMS.init();
-        } else {
-          // 轮询等待
-          const checkCMS = setInterval(function() {
-            if (typeof window.CMS !== 'undefined') {
-              clearInterval(checkCMS);
-              window.CMS.init();
-            }
-          }, 100);
-        }
-      });
-    }
-  </script>
 </body>
 </html>
