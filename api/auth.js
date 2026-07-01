@@ -63,28 +63,47 @@ export default async function handler(req, res) {
 <body>
   <script>
     (function() {
-      try {
-        // 向 opener (Decap CMS 弹出窗口的父窗口) 发送 token
-        if (window.opener) {
+      const CMS_URL = 'https://www.xingying.us.kg';
+      const token = '${access_token}';
+
+      console.log('🔑 OAuth callback received, token:', token);
+
+      // 1. 尝试通过 postMessage 向父窗口发送 token
+      if (window.opener) {
+        try {
           window.opener.postMessage({
             type: 'authorization:github:success',
             payload: {
-              token: '${access_token}',
+              token: token,
               provider: 'github'
             }
-          }, '${process.env.NODE_ENV === 'production' ? 'https://www.xingying.us.kg' : '*'});
-          // 关闭当前弹出窗口
-          window.close();
-        } else {
-          // 如果无法通过 postMessage 通信，显示成功信息
-          document.body.innerHTML = '<h2>✅ 授权成功！请关闭此窗口并返回 CMS。</h2>';
+          }, CMS_URL);
+          console.log('✅ postMessage sent to opener');
+          // 延迟关闭窗口，确保消息已发送
+          setTimeout(() => {
+            window.close();
+            // 如果窗口未能关闭，跳转到 CMS
+            setTimeout(() => {
+              window.location.href = CMS_URL + '/admin/index.html';
+            }, 500);
+          }, 300);
+        } catch (e) {
+          console.error('❌ postMessage error:', e);
+          // 如果 postMessage 失败，直接跳转回 CMS
+          window.location.href = CMS_URL + '/admin/index.html';
         }
-      } catch (e) {
-        console.error('postMessage error:', e);
-        document.body.innerHTML = '<h2>✅ 授权成功！请关闭此窗口并返回 CMS。</h2>';
+      } else {
+        // 2. 没有父窗口（直接访问），跳转到 CMS
+        console.warn('⚠️ No opener found, redirecting to CMS');
+        window.location.href = CMS_URL + '/admin/index.html';
       }
     })();
   </script>
+  <div style="text-align: center; padding-top: 50px; font-family: sans-serif;">
+    <h2>✅ 授权成功！</h2>
+    <p>正在返回 CMS，请稍候...</p>
+    <p><a href="https://www.xingying.us.kg/admin/index.html">如果未自动跳转，请点击这里</a></p>
+  </div>
 </body>
 </html>
     `;
