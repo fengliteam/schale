@@ -2,6 +2,7 @@ backend:
   name: github
   repo: fengliteam/schale
   branch: main
+  base_url: https://www.xingying.us.kg
   auth_endpoint: https://www.xingying.us.kg/api/auth
 
 media_folder: "public/img/uploads"
@@ -26,7 +27,7 @@ collections:
       - { name: "recommend", label: "⭐ 推荐文章", widget: "boolean", default: false }
       - { name: "top", label: "📌 置顶文章", widget: "boolean", default: false }
       - { name: "hide", label: "🙈 隐藏文章", widget: "boolean", default: false }
-      - { name: "type", label: "页面类型", widget: "select", options: [{ label: "普通文章", value: "" }, { label: "友链页", value: "links" }], default: "", required: false }
+      - { name: "type", label: "页面类型", widget: "select", options: [{ label: "普通文章", value: "" }, { label: "友链页", value: "links" }], default: "" }
       - { name: "comment", label: "开启评论", widget: "boolean", default: true }
       - { name: "body", label: "正文内容", widget: "markdown" }
     sortable_fields: ["date", "title"]
