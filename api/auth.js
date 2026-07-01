@@ -4,7 +4,6 @@ import axios from 'axios';
 export default async function handler(req, res) {
   const { method, query } = req;
 
-  // 只处理 GET 请求
   if (method !== 'GET') {
     res.status(405).send('Method Not Allowed');
     return;
@@ -15,12 +14,12 @@ export default async function handler(req, res) {
   // ===== 第一步：没有 code，发起 GitHub OAuth 授权 =====
   if (!code) {
     const clientId = process.env.OAUTH_GITHUB_CLIENT_ID;
-    // 构建 GitHub 授权 URL，回调地址指向本函数
+    // ⚠️ 这个 redirect_uri 必须与 GitHub OAuth App 中注册的完全一致
     const redirectUri = 'https://www.xingying.us.kg/api/auth';
-    const scope = query.scope || 'repo'; // Decap 默认要求 repo 权限
+    const scope = query.scope || 'repo';
     const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope}`;
 
-    // 重定向到 GitHub
+    console.log('Redirecting to GitHub:', authUrl);
     res.writeHead(302, { Location: authUrl });
     res.end();
     return;
@@ -54,10 +53,12 @@ export default async function handler(req, res) {
       throw new Error('No access_token in response');
     }
 
-    // Decap CMS 期望返回 { token: 'xxx' }
     res.status(200).json({ token: access_token });
   } catch (error) {
     console.error('OAuth error:', error.message);
+    if (error.response) {
+      console.error('GitHub API error data:', error.response.data);
+    }
     res.status(500).json({ error: 'Authentication failed' });
   }
 }
