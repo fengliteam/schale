@@ -22,7 +22,7 @@
     })();
 
     // ============================================================
-    // 2. 启用手动初始化（必须在加载 CMS 脚本之前）
+    // 2. 启用手动初始化（必须在加载 CMS 脚本之前）[reference:4]
     // ============================================================
     window.CMS_MANUAL_INIT = true;
 
@@ -81,25 +81,24 @@
 
   <script>
     // ============================================================
-    // 4. 按照官方文档方式手动初始化
+    // 4. 按照官方文档方式手动初始化[reference:5]
     // ============================================================
     (function() {
-      // 从 window 对象解构出 CMS 和 init 函数
-      const { CMS, initCMS: init } = window;
-
-      if (typeof init === 'function') {
-        console.log('🚀 Initializing CMS with config (load_config_file: false)');
-
-        // ★★★ 官方推荐的方式：传入 { config: ..., load_config_file: false } ★★★
-        init({
-          config: CMS_CONFIG,
-          load_config_file: false  // 完全忽略外部的 config.yml
-        });
-
-        console.log('✅ CMS initialized');
-      } else {
-        console.error('❌ CMS init function not found');
+      // 检查 CMS 是否已加载
+      if (typeof window.CMS === 'undefined') {
+        console.error('❌ CMS not loaded');
+        return;
       }
+
+      console.log('🚀 Initializing CMS with config');
+
+      // ★★★ 官方推荐方式：CMS.init({ config: ..., load_config_file: false }) ★★★
+      window.CMS.init({
+        config: CMS_CONFIG,
+        load_config_file: false  // 完全忽略外部的 config.yml[reference:6]
+      });
+
+      console.log('✅ CMS initialized');
     })();
   </script>
 </body>
