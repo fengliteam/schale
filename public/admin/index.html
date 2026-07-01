@@ -8,14 +8,13 @@
 <body>
   <script>
     // ============================================================
-    // 1. 处理 URL 中的 token
+    // 1. 处理 URL 中的 token（存入 localStorage）
     // ============================================================
     (function() {
       const urlParams = new URLSearchParams(window.location.search);
       const tokenFromUrl = urlParams.get('token');
       if (tokenFromUrl) {
         localStorage.setItem('github_token', tokenFromUrl);
-        // 清除 URL 参数
         const cleanUrl = window.location.origin + window.location.pathname;
         window.history.replaceState({}, document.title, cleanUrl);
         console.log('✅ Token saved to localStorage');
@@ -23,34 +22,20 @@
     })();
 
     // ============================================================
-    // 2. 启用手动初始化（必须在加载 CMS 脚本之前设置）
+    // 2. 启用手动初始化（必须在加载 CMS 脚本之前）
     // ============================================================
     window.CMS_MANUAL_INIT = true;
-    console.log('🔄 CMS_MANUAL_INIT set to true');
 
     // ============================================================
-    // 3. 完整的 CMS 配置对象
+    // 3. 完整的配置对象
     // ============================================================
     const CMS_CONFIG = {
-      // ★★★ 关键：忽略外部的 config.yml 文件 ★★★
-      load_config_file: false,
       backend: {
         name: "github",
         repo: "fengliteam/schale",
         branch: "main",
         base_url: "https://www.xingying.us.kg",
-        auth_endpoint: "/api/auth",
-        // 自定义认证：优先使用 localStorage 中的 token
-        auth: function() {
-          const token = localStorage.getItem('github_token');
-          if (token) {
-            console.log('🔑 Using token from localStorage');
-            // ★★★ 必须返回一个包含 token 字段的对象 ★★★
-            return Promise.resolve({ token: token });
-          }
-          // 返回 null 让 CMS 使用默认 OAuth 流程
-          return Promise.resolve(null);
-        }
+        auth_endpoint: "/api/auth"
       },
       media_folder: "public/img/uploads",
       public_folder: "/img/uploads",
@@ -95,23 +80,27 @@
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
   <script>
-    // 等待 CMS 加载完成后，使用配置对象进行初始化
-    function initCMS() {
-      if (typeof window.CMS !== 'undefined') {
-        console.log('🚀 Initializing CMS with config');
-        // ★★★ 通过 init 函数传入配置 ★★★
-        window.CMS.init({ config: CMS_CONFIG });
-      } else {
-        console.log('⏳ Waiting for CMS to load...');
-        setTimeout(initCMS, 200);
-      }
-    }
+    // ============================================================
+    // 4. 按照官方文档方式手动初始化
+    // ============================================================
+    (function() {
+      // 从 window 对象解构出 CMS 和 init 函数
+      const { CMS, initCMS: init } = window;
 
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initCMS);
-    } else {
-      initCMS();
-    }
+      if (typeof init === 'function') {
+        console.log('🚀 Initializing CMS with config (load_config_file: false)');
+
+        // ★★★ 官方推荐的方式：传入 { config: ..., load_config_file: false } ★★★
+        init({
+          config: CMS_CONFIG,
+          load_config_file: false  // 完全忽略外部的 config.yml
+        });
+
+        console.log('✅ CMS initialized');
+      } else {
+        console.error('❌ CMS init function not found');
+      }
+    })();
   </script>
 </body>
 </html>
