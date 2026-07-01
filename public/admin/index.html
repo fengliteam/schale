@@ -8,24 +8,22 @@
 <body>
   <script>
     // ============================================================
-    // 1. 处理 URL 中的 token，存入 localStorage，并清除 URL 参数
+    // 1. 处理 URL 中的 token
     // ============================================================
     (function() {
       const urlParams = new URLSearchParams(window.location.search);
       const tokenFromUrl = urlParams.get('token');
       if (tokenFromUrl) {
         localStorage.setItem('github_token', tokenFromUrl);
-        // 清除 URL 中的 token 参数（避免刷新后重复）
-        if (window.history && window.history.replaceState) {
-          const cleanUrl = window.location.origin + window.location.pathname;
-          window.history.replaceState({}, document.title, cleanUrl);
-        }
+        // 清除 URL 参数
+        const cleanUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
         console.log('✅ Token saved to localStorage');
       }
     })();
 
     // ============================================================
-    // 2. 定义 CMS 配置
+    // 2. 配置对象
     // ============================================================
     const CMS_CONFIG = {
       backend: {
@@ -34,17 +32,15 @@
         branch: "main",
         base_url: "https://www.xingying.us.kg",
         auth_endpoint: "/api/auth",
-        // 自定义认证函数：如果 localStorage 有 token，直接返回；否则走默认 OAuth
+        // 自定义认证：如果 localStorage 有 token，直接返回
         auth: function() {
           const token = localStorage.getItem('github_token');
           if (token) {
-            console.log('🔑 Using token from localStorage:', token);
+            console.log('🔑 Using token from localStorage');
             return Promise.resolve({ token: token });
-          } else {
-            console.log('ℹ️ No token found, using default OAuth flow');
-            // 返回 undefined 让 CMS 使用默认行为（弹出窗口）
-            return Promise.resolve(null);
           }
+          // 否则返回 null 让 CMS 使用默认 OAuth 流程
+          return Promise.resolve(null);
         }
       },
       media_folder: "public/img/uploads",
@@ -86,7 +82,7 @@
     };
 
     // ============================================================
-    // 3. 启用手动初始化，并加载 CMS 脚本
+    // 3. 启用手动初始化
     // ============================================================
     window.CMS_MANUAL_INIT = true;
     console.log('🔄 CMS_MANUAL_INIT set to true');
@@ -96,7 +92,7 @@
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 
   <script>
-    // 等待 CMS 加载完成后，手动初始化
+    // 等待 CMS 加载完成后手动初始化
     function initCMS() {
       if (typeof window.CMS !== 'undefined') {
         console.log('🚀 Initializing CMS with config');
@@ -106,7 +102,6 @@
         setTimeout(initCMS, 200);
       }
     }
-    // 在 DOM 加载完成后执行
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', initCMS);
     } else {
