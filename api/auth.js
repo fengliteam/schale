@@ -14,7 +14,6 @@ export default async function handler(req, res) {
   // ===== 第一步：没有 code，发起 GitHub OAuth 授权 =====
   if (!code) {
     const clientId = process.env.OAUTH_GITHUB_CLIENT_ID;
-    // ⚠️ 这个 redirect_uri 必须与 GitHub OAuth App 中注册的完全一致
     const redirectUri = 'https://www.xingying.us.kg/api/auth';
     const scope = query.scope || 'repo';
     const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope}`;
@@ -53,7 +52,45 @@ export default async function handler(req, res) {
       throw new Error('No access_token in response');
     }
 
-    res.status(200).json({ token: access_token });
+    // ===== 第三步：返回 HTML 页面，通过 postMessage 传递 token =====
+    const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>OAuth Callback</title>
+</head>
+<body>
+  <script>
+    (function() {
+      try {
+        // 向 opener (Decap CMS 弹出窗口的父窗口) 发送 token
+        if (window.opener) {
+          window.opener.postMessage({
+            type: 'authorization:github:success',
+            payload: {
+              token: '${access_token}',
+              provider: 'github'
+            }
+          }, '${process.env.NODE_ENV === 'production' ? 'https://www.xingying.us.kg' : '*'});
+          // 关闭当前弹出窗口
+          window.close();
+        } else {
+          // 如果无法通过 postMessage 通信，显示成功信息
+          document.body.innerHTML = '<h2>✅ 授权成功！请关闭此窗口并返回 CMS。</h2>';
+        }
+      } catch (e) {
+        console.error('postMessage error:', e);
+        document.body.innerHTML = '<h2>✅ 授权成功！请关闭此窗口并返回 CMS。</h2>';
+      }
+    })();
+  </script>
+</body>
+</html>
+    `;
+
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.status(200).send(html);
   } catch (error) {
     console.error('OAuth error:', error.message);
     if (error.response) {
