@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8" />
@@ -7,25 +7,27 @@
 </head>
 <body>
   <script>
-    // 1. 处理 URL 中的 token
+    // ============================================================
+    // 1. 处理 URL 中的 token（从 OAuth 回调带来）
+    // ============================================================
     (function() {
       const urlParams = new URLSearchParams(window.location.search);
       const tokenFromUrl = urlParams.get('token');
       if (tokenFromUrl) {
         localStorage.setItem('github_token', tokenFromUrl);
-        // 清除 URL 中的 token 参数，避免刷新后重复
+        // 清除 URL 参数，避免刷新后重复
         const cleanUrl = window.location.origin + window.location.pathname;
         window.history.replaceState({}, document.title, cleanUrl);
         console.log('✅ Token saved to localStorage');
       }
     })();
 
-    // 2. 启用 Decap CMS 手动初始化（必须在加载 CMS 之前设置）
-    window.CMS_MANUAL_INIT = true;
-
-    // 3. 定义完整的 CMS 配置（包含 load_config_file: false）
-    const CMS_CONFIG = {
-      // ★★★ 关键：忽略外部的 config.yml ★★★
+    // ============================================================
+    // 2. ★★★ 定义全局配置，CMS 会自动读取 ★★★
+    //    注意：不要设置 CMS_MANUAL_INIT，让 CMS 自动初始化
+    // ============================================================
+    window.CMS_CONFIG = {
+      // ★★★ 关键：完全忽略外部的 config.yml ★★★
       load_config_file: false,
 
       backend: {
@@ -83,26 +85,11 @@
         }
       ]
     };
+
+    console.log('✅ CMS_CONFIG defined');
   </script>
 
-  <!-- 加载 Decap CMS -->
+  <!-- 加载 Decap CMS，它会自动初始化并读取 window.CMS_CONFIG -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-
-  <script>
-    // 4. 手动初始化 CMS
-    (function initCMS() {
-      if (typeof window.CMS !== 'undefined' && typeof window.CMS.init === 'function') {
-        console.log('🚀 Initializing Decap CMS...');
-        window.CMS.init({
-          config: CMS_CONFIG,
-          load_config_file: false // 再次确保忽略 config.yml
-        });
-        console.log('✅ Decap CMS initialized');
-      } else {
-        console.log('⏳ Waiting for CMS to load...');
-        setTimeout(initCMS, 200);
-      }
-    })();
-  </script>
 </body>
 </html>
