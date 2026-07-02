@@ -1,5 +1,5 @@
 {
-  "routes": [
-    { "src": "^/admin/?$", "dest": "/admin/index.html" }
+  "rewrites": [
+    { "source": "/admin", "destination": "/admin/index.html" }
   ]
 }
