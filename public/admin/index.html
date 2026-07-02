@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8" />
@@ -27,19 +27,16 @@
     window.CMS_MANUAL_INIT = true;
 
     // ============================================================
-    // 3. 完整配置对象（包含 load_config_file: false）
+    // 3. 完整配置对象
     // ============================================================
     const CMS_CONFIG = {
-      // ★★★ 关键：告诉 CMS 完全忽略外部的 config.yml ★★★
       load_config_file: false,
-
       backend: {
         name: "github",
         repo: "fengliteam/schale",
         branch: "main",
         base_url: "https://www.xingying.us.kg",
         auth_endpoint: "/api/auth",
-        // 自定义认证：检查 localStorage 中的 token
         auth: function() {
           const token = localStorage.getItem('github_token');
           if (token) {
@@ -49,13 +46,10 @@
           return Promise.resolve(null);
         }
       },
-
       media_folder: "public/img/uploads",
       public_folder: "/img/uploads",
-
       collections: [
         {
-          // ★★★ 确保这个 name 是唯一的，且没有拼写错误 ★★★
           name: "blog",
           label: "📄 博客文章",
           label_singular: "文章",
@@ -96,12 +90,11 @@
 
   <script>
     // ============================================================
-    // 4. 手动初始化 CMS
+    // 4. ★★★ 关键：手动初始化 CMS ★★★
     // ============================================================
     (function initCMS() {
       if (typeof window.CMS !== 'undefined' && typeof window.CMS.init === 'function') {
         console.log('🚀 Initializing CMS with manual init...');
-        // ★★★ 在 init 参数中再次确认忽略外部 config.yml ★★★
         window.CMS.init({
           config: CMS_CONFIG,
           load_config_file: false
