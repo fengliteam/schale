@@ -1,3 +1,8 @@
+---
+// src/pages/admin/index.astro
+// 这个页面只渲染一个简单的 HTML 框架，CMS 会通过客户端脚本接管
+---
+
 <!doctype html>
 <html>
 <head>
@@ -6,16 +11,23 @@
   <title>博客后台管理</title>
 </head>
 <body>
-  <script>
+  <!-- 容器，Decap CMS 会注入界面到此 -->
+  <div id="cms-root"></div>
+
+  <script type="module">
     // ============================================================
-    // 1. 处理 URL 中的 token
+    // 1. 导入 Decap CMS 核心库 (npm 包)
+    // ============================================================
+    import CMS from 'decap-cms-app';
+
+    // ============================================================
+    // 2. 处理 URL 中的 token（从 OAuth 回调带来）
     // ============================================================
     (function() {
       const urlParams = new URLSearchParams(window.location.search);
-      const token = urlParams.get('token');
-      if (token) {
-        localStorage.setItem('github_token', token);
-        // 清除 URL 参数，避免刷新后重复
+      const tokenFromUrl = urlParams.get('token');
+      if (tokenFromUrl) {
+        localStorage.setItem('github_token', tokenFromUrl);
         const cleanUrl = window.location.origin + window.location.pathname;
         window.history.replaceState({}, document.title, cleanUrl);
         console.log('✅ Token saved to localStorage');
@@ -23,29 +35,32 @@
     })();
 
     // ============================================================
-    // 2. 定义内联配置（包含 auth 函数）
+    // 3. 定义完整配置（内联，不依赖外部 config.yml）
     // ============================================================
-    window.CMS_CONFIG = {
+    const CONFIG = {
+      // ★★★ 关键：忽略外部的 config.yml ★★★
       load_config_file: false,
+
       backend: {
         name: "github",
         repo: "fengliteam/schale",
         branch: "main",
         base_url: "https://www.xingying.us.kg",
         auth_endpoint: "/api/auth",
-        // ★★★ 自定义认证函数 ★★★
+        // 自定义认证：从 localStorage 读取 token
         auth: function() {
           const token = localStorage.getItem('github_token');
           if (token) {
             console.log('🔑 Using token from localStorage');
             return Promise.resolve({ token: token });
           }
-          // 没有 token，返回 null 让 CMS 使用默认 OAuth 流程
           return Promise.resolve(null);
         }
       },
+
       media_folder: "public/img/uploads",
       public_folder: "/img/uploads",
+
       collections: [
         {
           name: "blog",
@@ -81,19 +96,13 @@
         }
       ]
     };
-  </script>
 
-  <!-- 加载 Decap CMS，它会自动初始化 -->
-  <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
-
-  <!-- 如果页面加载时 localStorage 已有 token，可以强制刷新一次以确保 CMS 加载后能读取 -->
-  <script>
-    (function() {
-      // 如果已有 token 且当前页面 URL 没有 token 参数，但页面刚加载，CMS 还未初始化，可能无法立即使用 token。
-      // 但 CMS 在初始化时会调用 auth 函数，所以无需额外操作。
-      // 为了防止 token 过期或无效，可以在控制台输出状态。
-      console.log('CMS will initialize shortly.');
-    })();
+    // ============================================================
+    // 4. 初始化 Decap CMS
+    // ============================================================
+    console.log('🚀 Initializing Decap CMS...');
+    CMS.init({ config: CONFIG });
+    console.log('✅ Decap CMS initialized');
   </script>
 </body>
 </html>
