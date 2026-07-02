@@ -1,6 +1,5 @@
 ---
 // src/pages/admin/index.astro
-// 这个页面只渲染一个简单的 HTML 框架，CMS 会通过客户端脚本接管
 ---
 
 <!doctype html>
@@ -11,17 +10,23 @@
   <title>博客后台管理</title>
 </head>
 <body>
-  <!-- ★★★ 关键：Decap CMS 默认挂载到 id="nc-root" ★★★ -->
+  <!-- Decap CMS 默认挂载到 id="nc-root" [reference:2] -->
   <div id="nc-root"></div>
 
   <script type="module">
     // ============================================================
-    // 1. 导入 Decap CMS 核心库 (npm 包)
+    // 1. ★★★ 关键：在导入 CMS 之前设置手动初始化标志 ★★★
     // ============================================================
-    import CMS from 'decap-cms-app';
+    window.CMS_MANUAL_INIT = true;  // [reference:3][reference:4]
 
     // ============================================================
-    // 2. 处理 URL 中的 token（从 OAuth 回调带来）
+    // 2. 导入 Decap CMS
+    // ============================================================
+    // [reference:5][reference:6]官方推荐从 'decap-cms-app' 同时导入 CMS 和 init
+    import CMS, { init } from 'decap-cms-app';
+
+    // ============================================================
+    // 3. 处理 URL 中的 token（从 OAuth 回调带来）
     // ============================================================
     (function() {
       const urlParams = new URLSearchParams(window.location.search);
@@ -35,19 +40,15 @@
     })();
 
     // ============================================================
-    // 3. 定义完整配置（内联，不依赖外部 config.yml）
+    // 4. 定义完整配置
     // ============================================================
     const CONFIG = {
-      // ★★★ 关键：忽略外部的 config.yml ★★★
-      load_config_file: false,
-
       backend: {
         name: "github",
         repo: "fengliteam/schale",
         branch: "main",
         base_url: "https://www.xingying.us.kg",
         auth_endpoint: "/api/auth",
-        // 自定义认证：从 localStorage 读取 token
         auth: function() {
           const token = localStorage.getItem('github_token');
           if (token) {
@@ -57,10 +58,8 @@
           return Promise.resolve(null);
         }
       },
-
       media_folder: "public/img/uploads",
       public_folder: "/img/uploads",
-
       collections: [
         {
           name: "blog",
@@ -98,10 +97,14 @@
     };
 
     // ============================================================
-    // 4. 初始化 Decap CMS
+    // 5. ★★★ 关键：使用 init 函数手动初始化 ★★★
     // ============================================================
     console.log('🚀 Initializing Decap CMS...');
-    CMS.init({ config: CONFIG });
+    // [reference:7][reference:8]官方示例：通过 init 传入完整配置并忽略 config.yml
+    init({
+      config: CONFIG,
+      load_config_file: false  // 完全忽略外部的 config.yml[reference:9][reference:10]
+    });
     console.log('✅ Decap CMS initialized');
   </script>
 </body>
