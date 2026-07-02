@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 export default async function handler(req, res) {
-  const { method, query, url } = req;
+  const { method, query } = req;
 
   if (method !== 'GET') {
     res.status(405).send('Method Not Allowed');
@@ -11,12 +11,11 @@ export default async function handler(req, res) {
 
   const { code } = query;
 
-  // ============================================================
-  // 路由1: /auth - 发起 GitHub OAuth 授权
-  // ============================================================
+  // ===== 路由1: 没有 code，发起 GitHub OAuth 授权 =====
   if (!code) {
     const clientId = process.env.OAUTH_GITHUB_CLIENT_ID;
-    const redirectUri = 'https://www.xingying.us.kg/api/auth/callback';
+    // GitHub OAuth 回调地址必须与 GitHub App 设置完全一致
+    const redirectUri = 'https://www.xingying.us.kg/api/auth';
     const scope = query.scope || 'repo';
     const authUrl = `https://github.com/login/oauth/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&scope=${scope}`;
 
@@ -26,9 +25,7 @@ export default async function handler(req, res) {
     return;
   }
 
-  // ============================================================
-  // 路由2: /callback - 处理 GitHub 回调，通过 postMessage 传递 token
-  // ============================================================
+  // ===== 路由2: 有 code，交换 access_token =====
   const clientId = process.env.OAUTH_GITHUB_CLIENT_ID;
   const clientSecret = process.env.OAUTH_GITHUB_CLIENT_SECRET;
 
@@ -56,7 +53,7 @@ export default async function handler(req, res) {
       throw new Error('No access_token in response');
     }
 
-    // ===== 官方标准方式：通过 postMessage 将 token 传回主窗口 =====
+    // ===== 通过 postMessage 将 token 传回主窗口 =====
     const html = `
 <!DOCTYPE html>
 <html>
@@ -72,7 +69,6 @@ export default async function handler(req, res) {
 
       if (window.opener) {
         try {
-          // 官方标准格式：发送给 Decap CMS 的 message 监听器
           window.opener.postMessage({
             type: 'authorization:github:success',
             payload: {
@@ -81,7 +77,6 @@ export default async function handler(req, res) {
             }
           }, 'https://www.xingying.us.kg');
           console.log('✅ postMessage sent to opener');
-          // 延迟关闭窗口
           setTimeout(function() {
             window.close();
           }, 300);

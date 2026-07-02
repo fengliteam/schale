@@ -3,7 +3,7 @@ backend:
   repo: fengliteam/schale
   branch: main
   base_url: https://www.xingying.us.kg
-  auth_endpoint: /api/auth/auth
+  auth_endpoint: /api/auth          # ← 修正：不要重复 /auth
 
 media_folder: "public/img/uploads"
 public_folder: "/img/uploads"
