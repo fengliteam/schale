@@ -3,13 +3,13 @@ backend:
   repo: fengliteam/schale
   branch: main
   base_url: https://www.xingying.us.kg
-  auth_endpoint: /api/auth          # ← 修正：不要重复 /auth
+  auth_endpoint: /api/auth
 
 media_folder: "public/img/uploads"
 public_folder: "/img/uploads"
 
 collections:
-  - name: "blog"
+  - name: "blog"                          # ← 确保这个 name 是唯一的
     label: "📄 博客文章"
     label_singular: "文章"
     folder: "src/content/blog"
