@@ -52,7 +52,7 @@ export default async function handler(req, res) {
       throw new Error('No access_token in response');
     }
 
-    // ===== 第三步：重定向回 CMS 并携带 token =====
+    // ===== 第三步：重定向到 CMS 页面，携带 token =====
     const redirectUrl = `https://www.xingying.us.kg/admin/index.html?token=${access_token}`;
     console.log('✅ Token obtained, redirecting to:', redirectUrl);
     res.writeHead(302, { Location: redirectUrl });
