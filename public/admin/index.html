@@ -6,7 +6,79 @@
   <title>博客后台管理</title>
 </head>
 <body>
-  <!-- 自动加载 Decap CMS，它会自动寻找同目录下的 config.yml -->
+  <script>
+    // ============================================================
+    // 1. 处理 URL 中的 token（从 OAuth 回调带来）
+    // ============================================================
+    (function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const tokenFromUrl = urlParams.get('token');
+      if (tokenFromUrl) {
+        localStorage.setItem('github_token', tokenFromUrl);
+        const cleanUrl = window.location.origin + window.location.pathname;
+        window.history.replaceState({}, document.title, cleanUrl);
+        console.log('✅ Token saved to localStorage');
+      }
+    })();
+
+    // ============================================================
+    // 2. 定义内联配置（CMS 会自动读取 window.CMS_CONFIG）
+    // ============================================================
+    window.CMS_CONFIG = {
+      // ★★★ 关键：忽略外部的 config.yml ★★★
+      load_config_file: false,
+
+      backend: {
+        name: "github",
+        repo: "fengliteam/schale",
+        branch: "main",
+        base_url: "https://www.xingying.us.kg",
+        auth_endpoint: "/api/auth"
+      },
+
+      media_folder: "public/img/uploads",
+      public_folder: "/img/uploads",
+
+      collections: [
+        {
+          name: "blog",
+          label: "📄 博客文章",
+          label_singular: "文章",
+          folder: "src/content/blog",
+          create: true,
+          slug: "{{slug}}",
+          path: "{{slug}}/index",
+          preview_path: "article/{{slug}}",
+          fields: [
+            { name: "title", label: "文章标题", widget: "string" },
+            { name: "date", label: "发布日期", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false },
+            { name: "updated", label: "更新日期", widget: "datetime", required: false, date_format: "YYYY-MM-DD", time_format: false },
+            { name: "categories", label: "分类", widget: "string", required: false },
+            { name: "tags", label: "标签", widget: "list", required: false },
+            { name: "cover", label: "封面图", widget: "image", required: false },
+            { name: "recommend", label: "⭐ 推荐文章", widget: "boolean", default: false },
+            { name: "top", label: "📌 置顶文章", widget: "boolean", default: false },
+            { name: "hide", label: "🙈 隐藏文章", widget: "boolean", default: false },
+            { name: "type", label: "页面类型", widget: "select", options: [{ label: "普通文章", value: "" }, { label: "友链页", value: "links" }], default: "" },
+            { name: "comment", label: "开启评论", widget: "boolean", default: true },
+            { name: "body", label: "正文内容", widget: "markdown" }
+          ],
+          sortable_fields: ["date", "title"],
+          default_sort: ["date", "desc"],
+          view_filters: [
+            { label: "全部文章", field: "hide", pattern: false },
+            { label: "已隐藏", field: "hide", pattern: true },
+            { label: "置顶文章", field: "top", pattern: true },
+            { label: "推荐文章", field: "recommend", pattern: true }
+          ]
+        }
+      ]
+    };
+
+    console.log('✅ CMS_CONFIG defined');
+  </script>
+
+  <!-- 加载 Decap CMS，它会自动初始化并读取 window.CMS_CONFIG -->
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
 </body>
 </html>
