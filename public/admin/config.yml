@@ -9,7 +9,7 @@ media_folder: "public/img/uploads"
 public_folder: "/img/uploads"
 
 collections:
-  - name: "blog"                          # ← 确保这个 name 是唯一的
+  - name: "blog"                          # 确保这个 name 是唯一的
     label: "📄 博客文章"
     label_singular: "文章"
     folder: "src/content/blog"
