@@ -30,7 +30,7 @@
     // 3. 完整配置对象（包含 load_config_file: false）
     // ============================================================
     const CMS_CONFIG = {
-      // ★★★ 关键：在配置对象中禁用外部 config.yml ★★★
+      // ★★★ 关键：告诉 CMS 完全忽略外部的 config.yml ★★★
       load_config_file: false,
 
       backend: {
@@ -44,10 +44,8 @@
           const token = localStorage.getItem('github_token');
           if (token) {
             console.log('🔑 Using token from localStorage');
-            // 返回一个包含 token 的对象
             return Promise.resolve({ token: token });
           }
-          console.log('ℹ️ No token found, using default OAuth flow');
           return Promise.resolve(null);
         }
       },
@@ -57,6 +55,7 @@
 
       collections: [
         {
+          // ★★★ 确保这个 name 是唯一的，且没有拼写错误 ★★★
           name: "blog",
           label: "📄 博客文章",
           label_singular: "文章",
@@ -97,14 +96,15 @@
 
   <script>
     // ============================================================
-    // 4. 手动初始化 CMS（按官方文档方式）
+    // 4. 手动初始化 CMS
     // ============================================================
     (function initCMS() {
       if (typeof window.CMS !== 'undefined' && typeof window.CMS.init === 'function') {
         console.log('🚀 Initializing CMS with manual init...');
-        // 传入配置对象，load_config_file: false 已在配置中设置
+        // ★★★ 在 init 参数中再次确认忽略外部 config.yml ★★★
         window.CMS.init({
-          config: CMS_CONFIG
+          config: CMS_CONFIG,
+          load_config_file: false
         });
         console.log('✅ CMS initialized successfully');
       } else {
