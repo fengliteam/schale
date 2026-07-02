@@ -52,11 +52,55 @@ export default async function handler(req, res) {
       throw new Error('No access_token in response');
     }
 
-    // ===== 第三步：重定向到 CMS 页面，携带 token =====
-    const redirectUrl = `https://www.xingying.us.kg/admin/index.html?token=${access_token}`;
-    console.log('✅ Token obtained, redirecting to:', redirectUrl);
-    res.writeHead(302, { Location: redirectUrl });
-    res.end();
+    // ===== 第三步：返回 HTML 页面，通过 postMessage 传递 token 给主窗口 =====
+    const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>OAuth Callback</title>
+</head>
+<body>
+  <script>
+    (function() {
+      const token = '${access_token}';
+      console.log('🔑 OAuth callback received, token:', token);
+
+      if (window.opener) {
+        try {
+          // 发送 token 给父窗口（CMS 主页面）
+          window.opener.postMessage({
+            type: 'authorization:github:success',
+            payload: {
+              token: token,
+              provider: 'github'
+            }
+          }, 'https://www.xingying.us.kg');
+          console.log('✅ postMessage sent to opener');
+          // 延迟关闭窗口，确保消息发送
+          setTimeout(function() {
+            window.close();
+          }, 300);
+        } catch (e) {
+          console.error('❌ postMessage error:', e);
+          window.close();
+        }
+      } else {
+        console.warn('⚠️ No opener found');
+        window.location.href = 'https://www.xingying.us.kg/admin/index.html';
+      }
+    })();
+  </script>
+  <div style="text-align: center; padding-top: 50px; font-family: sans-serif;">
+    <h2>✅ 授权成功！</h2>
+    <p>正在返回 CMS，请稍候...</p>
+  </div>
+</body>
+</html>
+    `;
+
+    res.setHeader('Content-Type', 'text/html; charset=utf-8');
+    res.status(200).send(html);
   } catch (error) {
     console.error('OAuth error:', error.message);
     if (error.response) {
