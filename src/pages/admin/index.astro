@@ -10,19 +10,18 @@
   <title>博客后台管理</title>
 </head>
 <body>
-  <!-- Decap CMS 默认挂载到 id="nc-root" [reference:2] -->
+  <!-- Decap CMS 默认挂载到 id="nc-root"，但我们也显式指定 -->
   <div id="nc-root"></div>
 
   <script type="module">
     // ============================================================
     // 1. ★★★ 关键：在导入 CMS 之前设置手动初始化标志 ★★★
     // ============================================================
-    window.CMS_MANUAL_INIT = true;  // [reference:3][reference:4]
+    window.CMS_MANUAL_INIT = true;
 
     // ============================================================
     // 2. 导入 Decap CMS
     // ============================================================
-    // [reference:5][reference:6]官方推荐从 'decap-cms-app' 同时导入 CMS 和 init
     import CMS, { init } from 'decap-cms-app';
 
     // ============================================================
@@ -97,15 +96,37 @@
     };
 
     // ============================================================
-    // 5. ★★★ 关键：使用 init 函数手动初始化 ★★★
+    // 5. ★★★ 等待 DOM 就绪后初始化 ★★★
     // ============================================================
-    console.log('🚀 Initializing Decap CMS...');
-    // [reference:7][reference:8]官方示例：通过 init 传入完整配置并忽略 config.yml
-    init({
-      config: CONFIG,
-      load_config_file: false  // 完全忽略外部的 config.yml[reference:9][reference:10]
-    });
-    console.log('✅ Decap CMS initialized');
+    function initializeCMS() {
+      try {
+        console.log('🚀 Initializing Decap CMS...');
+        // ★★★ 关键：显式指定 root 挂载点 ★★★
+        init({
+          config: CONFIG,
+          load_config_file: false,
+          root: '#nc-root'   // 显式指定容器 ID
+        });
+        console.log('✅ Decap CMS initialized');
+      } catch (error) {
+        console.error('❌ Failed to initialize CMS:', error);
+        // 在页面上显示错误信息，方便调试
+        const root = document.getElementById('nc-root');
+        if (root) {
+          root.innerHTML = `<div style="color: red; padding: 20px;">
+            <h3>CMS 初始化失败</h3>
+            <pre>${error.message}</pre>
+          </div>`;
+        }
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeCMS);
+    } else {
+      // DOM 已就绪，直接初始化
+      initializeCMS();
+    }
   </script>
 </body>
 </html>
